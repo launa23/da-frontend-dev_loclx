@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TiềnTỷTầmTay - Thống kê chi tiêu</title>
+    <link rel="stylesheet" href="../plugins/bootstrap-5.3.2-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../plugins/fontawesome-free-6.4.2-web/css/all.min.css">
+    <link rel="stylesheet" href="../plugins/datatables/datatables.min.css">
+    <link rel="stylesheet" href="../plugins/datatables/DataTables-1.13.7/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="../css/income.css">
+    <link rel="stylesheet" href="../css/statistic_outcome.css">
+</head>
+<body style="background-color: #0b0e11;" onload="checkLogin()">
+    <nav class="navbar navbar-expand-lg bg-info" style="box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);">
+        <div class="container p-0 bg-info" style="width: 1140px;">
+          <a class="navbar-brand te" href="#">Quản lý tài chính</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link text-white" href="income.html">Thu nhập</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-white" href="outcome.html">Chi tiêu</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-white" aria-current="page" href="saving.html">Tiết kiệm</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-white" aria-current="page" href="finance_goal.html">Mục tiêu</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link text-white dropdown-toggle DA-active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Thống kê
+                </a>
+                <ul class="dropdown-menu pt-0 pb-0" style="box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);">
+                  <li>
+                    <div class="item p-1">
+                        <a class="dropdown-item text-dark" href="statistic_income.html">Thống kê thu nhập</a>
+                    </div>
+                  </li>
+                  <li><hr class="dropdown-divider mt-0 mb-0"></li>
+                  <li>
+                    <div class="item p-1">
+                        <a class="dropdown-item text-dark" href="statistic_outcome.html">Thống kê chi tiêu</a>
+                    </div>
+                  </li>
+                  <li><hr class="dropdown-divider mt-0 mb-0"></li>
+                  <li>
+                    <div class="item p-1">
+                        <a class="dropdown-item text-dark" href="statistic_saving.html">Thống kê tiết kiệm</a>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+          
+          <div class="collapse navbar-collapse ml-auto" style="justify-content: end;">
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                  <a class="nav-link text-white dropdown-toggle" href="#" id="DA-HoVaTen" data-bs-toggle="dropdown" aria-expanded="false"></a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item text-dark" id="DA-profile" href="./profile.html">Thông tin tài khoản</a></li>
+                    <li><a class="dropdown-item text-dark" id="DA-logout">Đăng xuất</a></li>
+                  </ul>
+                </li>
+            </ul>
+          </div>
+        </div>
+    </nav>
+    <div class="container" style="width: 1140px;">
+      <div class="row mt-3">
+        <div class="col-lg-12 pr-2">
+          <div class="row">
+            <div class="col-md-5" style="padding-left: 0px; padding-right: 18px;">
+              <div class="card mb-2" style="padding: 0px 18px; background-color: #2b3139;">
+                <div class="card-body p-2 DA-scoll-bar-today DA-border-radius">
+                    <i class="fa-solid fa-money-bill-transfer" style="display: inline-block; color: greenyellow; font-size: 20px;"></i>
+                    <label style=" color: #079bd1; font-size: 12px; font-weight: 700;">Chi tiêu hôm nay</label>
+                    <div id="myIncomeTransToday" class="mt-3">
+                                    
+                    </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-7" style="padding-left: 0px; padding-right: 18px;">
+              <div class="card mb-2" style="padding: 0px 18px; background-color: #2b3139;">
+                <div class="card-body p-2">
+                  <i class="fa-solid fa-chart-pie" style="display: inline-block; color: greenyellow; font-size: 20px;"></i>
+                  <label for="" style=" color: #079bd1; font-size: 12px; font-weight: 700;"> Bảng thống kê Thu - Chi qua các tháng</label>
+                  <div class="row p-2" style="padding-bottom: 12px !important;">
+                    <div class="col-sm-12 p-0" style="background-color: #2b3139 !important;">
+                        <table class="table table-dark table-borderless mb-0">
+                            <thead>
+                              <tr>
+                                <th scope="col">Tháng</th>
+                                <th scope="col">Thu</th>
+                                <th scope="col">Chi</th>
+                                <th scope="col" style="padding-left: 26px;">Chênh lệch</th>
+                              </tr>
+                            </thead>
+                            <tbody class="table-group-divider">
+                              <tr>
+                                <th scope="row" id="DA-Jan">1</th>
+                                <td class="DA-table-income" id="DA-Jan-income">--</td>
+                                <td class="DA-table-outcome" id="DA-Jan-outcome">--</td>
+                                <td class="DA-table-sum" id="DA-Jan-sum">--</td>
+                              </tr>
+                              <tr>
+                                <th scope="row" id="DA-Feb">2</th>
+                                <td class="DA-table-income" id="DA-Feb-income">--</td>
+                                <td class="DA-table-outcome" id="DA-Feb-outcome">--</td>
+                                <td class="DA-table-sum" id="DA-Feb-sum">--</td>
+                              </tr>
+                              <tr>
+                                <th scope="row" id="DA-Mar">3</th>
+                                <td class="DA-table-income" id="DA-Mar-income">--</td>
+                                <td class="DA-table-outcome" id="DA-Mar-outcome">--</td>
+                                <td class="DA-table-sum" id="DA-Mar-sum">--</td>
+                              </tr>
+                              <tr>
+                                <th scope="row" id="DA-Apr">4</th>
+                                <td class="DA-table-income" id="DA-Apr-income">--</td>
+                                <td class="DA-table-outcome" id="DA-Apr-outcome">--</td>
+                                <td class="DA-table-sum" id="DA-Apr-sum">--</td>
+                              </tr>
+                              <tr>
+                                <th scope="row" id="DA-May">5</th>
+                                <td class="DA-table-income" id="DA-May-income">--</td>
+                                <td class="DA-table-outcome" id="DA-May-outcome">--</td>
+                                <td class="DA-table-sum" id="DA-May-sum">--</td>
+                              </tr>
+                              <tr>
+                                <th scope="row" id="DA-Jun">6</th>
+                                <td class="DA-table-income" id="DA-Jun-income">--</td>
+                                <td class="DA-table-outcome" id="DA-Jun-outcome">--</td>
+                                <td class="DA-table-sum" id="DA-Jun-sum">--</td>
+                              </tr>
+                              <tr>
+                                <th scope="row" id="DA-Jul">7</th>
+                                <td class="DA-table-income" id="DA-Jul-income">--</td>
+                                <td class="DA-table-outcome" id="DA-Jul-outcome">--</td>
+                                <td class="DA-table-sum" id="DA-Jul-sum">--</td>
+                              </tr>
+                              <tr>
+                                <th scope="row" id="DA-Aug">8</th>
+                                <td class="DA-table-income" id="DA-Aug-income">--</td>
+                                <td class="DA-table-outcome" id="DA-Aug-outcome">--</td>
+                                <td class="DA-table-sum" id="DA-Aug-sum">--</td>
+                              </tr>
+                              <tr>
+                                <th scope="row" id="DA-Sep">9</th>
+                                <td class="DA-table-income" id="DA-Sep-income">--</td>
+                                <td class="DA-table-outcome" id="DA-Sep-outcome">--</td>
+                                <td class="DA-table-sum" id="DA-Sep-sum">--</td>
+                              </tr>
+                              <tr>
+                                <th scope="row" id="DA-Oct">10</th>
+                                <td class="DA-table-income" id="DA-Oct-income">--</td>
+                                <td class="DA-table-outcome" id="DA-Oct-outcome">--</td>
+                                <td class="DA-table-sum" id="DA-Oct-sum">--</td>
+                              </tr>
+                              <tr>
+                                <th scope="row" id="DA-Nov">11</th>
+                                <td class="DA-table-income" id="DA-Nov-income">--</td>
+                                <td class="DA-table-outcome" id="DA-Nov-outcome">--</td>
+                                <td class="DA-table-sum" id="DA-Nov-sum">--</td>
+                              </tr>
+                              <tr>
+                                <th scope="row" id="DA-Dec">12</th>
+                                <td class="DA-table-income" id="DA-Dec-income">--</td>
+                                <td class="DA-table-outcome" id="DA-Dec-outcome">--</td>
+                                <td class="DA-table-sum" id="DA-Dec-sum">--</td>
+                              </tr>
+                            </tbody>
+                            <tfoot class="table-group-divider">
+                              <tr>
+                                <th scope="col" style="padding-left: 25px !important;">Tổng</th>
+                                <th scope="col" id="DA-income-sum">--</th>
+                                <th scope="col" id="DA-outcome-sum">--</th>
+                                <th scope="col" style="text-align: center;" id="DA-diff-sum">--</th>
+                              </tr>
+                            </tfoot>
+                          </table> 
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- <div class="col-md-2" style="padding-left: 0px; padding-right: 0px;">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="card mb-2 DA-scoll-bar-bank" style="padding: 0px 18px; background-color: #2b3139;">
+                    <div class="card-body p-2 ">
+                      <i class="fa-solid fa-building-columns" style="display: inline-block; color: greenyellow; font-size: 20px;"></i>
+                      <label for="" style=" color: #079bd1; font-size: 12px; font-weight: 700;"> Bảng thông tin ngân hàng đang gửi</label>
+                      <div class="row p-2">
+                        
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div> -->
+          </div>
+        </div> 
+      </div>
+      <div class="row mt-2">
+        <div class="col-md-12 p-0">
+          <div class="card mb-2" style="padding: 0px 18px; background-color: #2b3139;">
+            <div class="card-body p-2">
+              <i class="fa-solid fa-table" style="display: inline-block; color: greenyellow; font-size: 20px;"></i>
+              <label for="" style=" color: #079bd1; font-size: 12px; font-weight: 700;"> Biểu đồ thống kê các khoản chi tiêu</label>
+              <div class="row p-2">
+                <div class="col-sm-12 text-white">
+                    <div class="row">
+                        <div class="col-lg-9">
+                            <canvas id="myChartBar" class="DA-chart" style="min-height: 450px;"></canvas>
+                        </div>
+                        <div class="col-lg-3">
+                              <div class="tab-content p-3" id="nav-tabContent">
+                                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
+                                  <div id="statistic_icome_date">
+                                    <label for="" class="text-info">Từ:</label>
+                                    <input type="datetime-local" id="DA-dateFrom" class="form-control bg-dark text-white" style="margin-left: 16px; border: #0b0e11;">
+
+                                    <label for="" class="mt-2 text-info">Đến:</label>
+                                    <input type="datetime-local"  id="DA-dateTo" class="form-control bg-dark text-white" style="margin-left: 5px; border: #0b0e11;">
+
+                                    <label class="mt-2">Chọn danh mục</label>
+                                    <ul class="DA-dropdown-menu" id="DA-listCategories">
+                                   
+                                    </ul>
+                                    <button class="btn btn-info mt-2 text-white" style="float: inline-end;" id="btn-filter">Lọc</button>
+                                  </div>
+                                </div>
+                              </div>
+                        </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+<script src="../plugins/bootstrap-5.3.2-dist/js/popper.min.js"></script>
+<script src="../plugins/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js"></script>
+<script src="../plugins/jquery/jquery-3.7.1.min.js"></script>
+<script src="../plugins/datatables/DataTables-1.13.7/js/jquery.dataTables.min.js"></script>
+<script src="../plugins/datatables/datatables.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="../js/statistic_outcome.js"></script>
+</body>
+</html>

@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TiềnTỷTầmTay - Tiết kiệm</title>
+  <link rel="stylesheet" href="../plugins/bootstrap-5.3.2-dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../plugins/fontawesome-free-6.4.2-web/css/all.min.css">
+  <link rel="stylesheet" href="../plugins/datatables/datatables.min.css">
+  <link rel="stylesheet" href="../plugins/datatables/DataTables-1.13.7/css/jquery.dataTables.min.css">
+  <!-- <link rel="stylesheet" href="../css/income.css"> -->
+  <link rel="stylesheet" href="../css/saving.css">
+
+</head>
+
+<body style="background-color: #0b0e11;" onload="checkLogin()">
+  <nav class="navbar navbar-expand-lg bg-info" style="box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);">
+    <div class="container p-0 bg-info" style="width: 1140px;">
+      <a class="navbar-brand te" href="#">Quản lý tài chính</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+        aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link text-white" href="income.html">Thu nhập</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" href="outcome.html">Chi tiêu</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white DA-active" aria-current="page" href="saving.html">Tiết kiệm</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" aria-current="page" href="finance_goal.html">Mục tiêu</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link text-white dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              Thống kê
+            </a>
+            <ul class="dropdown-menu pt-0 pb-0" style="box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);">
+              <li>
+                <div class="item p-1">
+                  <a class="dropdown-item" href="statistic_income.html">Thống kê thu nhập</a>
+                </div>
+              </li>
+              <li>
+                <hr class="dropdown-divider mt-0 mb-0">
+              </li>
+              <li>
+                <div class="item p-1">
+                  <a class="dropdown-item" href="statistic_outcome.html">Thống kê chi tiêu</a>
+                </div>
+              </li>
+              <li>
+                <hr class="dropdown-divider mt-0 mb-0">
+              </li>
+              <li>
+                <div class="item p-1">
+                  <a class="dropdown-item " href="statistic_saving.html">Thống kê tiết kiệm</a>
+                </div>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+
+      <div class="collapse navbar-collapse ml-auto" style="justify-content: end;">
+        <ul class="navbar-nav">
+          <li class="nav-item dropdown" id="DA-loginCheck">
+            <a class="nav-link text-white dropdown-toggle" href="#" id="DA-HoVaTen" data-bs-toggle="dropdown" aria-expanded="false"></a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item text-dark" id="DA-profile" href="./profile.html">Thông tin tài khoản</a></li>
+              <li><a class="dropdown-item text-dark" id="DA-logout">Đăng xuất</a></li>
+            </ul>
+        </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+
+  <div class="container" style="width: 1140px;">
+    <div class="row mt-3">
+      <div class="col-lg-12 pr-2">
+        <div class="row">
+          <div class="col-md-3" style="padding-left: 0px; padding-right: 6px;">
+            <div class="card mb-2" style="padding: 0px 18px; background-color: #2b3139;">
+              <div class="card-body p-2">
+                <i class="fa-solid fa-piggy-bank"
+                  style="display: inline-block; color: greenyellow; font-size: 20px;"></i>
+                <label for="" style=" color: #079bd1; font-size: 12px; font-weight: 700;"> Thông tin tiết kiệm</label>
+                <div class="row p-2">
+                  <div class="col-sm-12">
+                    <div class="row mb-2 DA-general-style">
+                      <div class="col-sm-3 align-self-center" style="padding-left: 14px;">
+                        <div class="DA-circle mt-2 mb-2">
+                          <i class="fa-solid fa-hand-holding-dollar"></i>
+                        </div>
+                      </div>
+                      <div class="col-sm-9 align-self-center">
+                        <div class="info-tktk">
+                          <label for="">Tổng số tiền nếu rút hết TKTK:</label>
+                        </div>
+                        <div class="money-tktk" style="height: 50%;">
+                          <label id="totalWithdrawalAmount" for=""></label>
+                          <label for="" class="ml-2">vnd</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row mb-2 DA-general-style">
+                      <div class="col-sm-3 align-self-center" style="padding-left: 14px;">
+                        <div class="DA-circle mt-2 mb-2">
+                          <i class="fa-solid fa-sack-dollar"></i>
+                        </div>
+                      </div>
+                      <div class="col-sm-9 align-self-center">
+                        <div class="info-tktk">
+                          <label for="">Tổng số tiền chưa gửi:</label>
+                        </div>
+                        <div class="money-tktk" style="height: 50%;">
+                          <label id="totalAmountNotSend" for=""></label>
+                          <label for="" class="ml-2">vnd</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row mb-2 DA-general-style">
+                      <div class="col-sm-3 align-self-center" style="padding-left: 14px;">
+                        <div class="DA-circle mt-2 mb-2">
+                          <i class="fa-solid fa-building-columns"></i>
+                        </div>
+                      </div>
+                      <div class="col-sm-9 align-self-center">
+                        <div class="info-tktk">
+                          <label for="">Tổng số tiền đang gửi:</label>
+                        </div>
+                        <div class="money-tktk" style="height: 50%;">
+                          <label id="totalAmountSend" for=""></label>
+                          <label for="" class="ml-2">vnd</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row DA-general-style">
+                      <div class="col-sm-3 align-self-center" style="padding-left: 14px;">
+                        <div class="DA-circle mt-2 mb-2">
+                          <i class="fa-solid fa-seedling"></i>
+                        </div>
+                      </div>
+                      <div class="col-sm-9 align-self-center">
+                        <div class="info-tktk">
+                          <label for="">Tổng số tiền lãi:</label>
+                        </div>
+                        <div class="money-tktk" style="height: 50%;">
+                          <label id="totalAmountInterest" for=""></label>
+                          <label for="" class="ml-2">vnd</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- bieu do tron -->
+          <div class="col-md-5" style="padding-left: 0px; padding-right: 6px;">
+            <div class="card mb-2" style="padding: 0px 18px; background-color: #2b3139;">
+              <div class="card-body p-2">
+                <i class="fa-solid fa-chart-pie"
+                  style="display: inline-block; color: greenyellow; font-size: 20px;"></i>
+                <label for="" style=" color: #079bd1; font-size: 12px; font-weight: 700;"> Phần trăm gửi tiết kiệm vào
+                  ngân hàng</label>
+                <div class="row p-2" style="padding-bottom: 12px !important;">
+                  <div class="col-sm-12">
+                    <canvas id="myChartDounghnut" class="DA-chart" style="max-height: 244px; min-height: 238px;"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="col-md-4" style="padding-left: 0px; padding-right: 0px;">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="card mb-2 DA-scoll-bar-bank" style="padding: 0px 18px; background-color: #2b3139;">
+                  <div class="card-body p-2 ">
+                    <i class="fa-solid fa-building-columns"
+                      style="display: inline-block; color: greenyellow; font-size: 20px;"></i>
+                    <label for="" style=" color: #079bd1; font-size: 12px; font-weight: 700;"> Bảng thông tin ngân hàng
+                      đang gửi</label>
+                    <div class="row p-2">
+                      <!-- list các ngân hàng -->
+                      <ul class="col-sm-12 pt-2" id="myBankInfo" style="margin-bottom: 0px;">
+                      </ul>
+                    </div>
+                    <div class="row">
+                      <ul class="pagination mb-0 col-lg-12 p-0" style="justify-content: center;">
+                        <div class="">
+                          <li class="page-item" style="display: inline-block;">
+                            <a id="bankInfoPrev" class="page-link" href="#" style="padding: 2px; background-color: #41454b; border: none; color: #079bd1;">
+                              <i class="fa-solid fa-angles-left"></i>
+                            </a>
+                          </li>
+                          <li class="page-item" style="display: inline-block;" >
+                            <a id="bankInfoNext" class="page-link" href="#" style="padding: 2px; background-color: #41454b; border: none; color: #079bd1;">
+                              <i class="fa-solid fa-angles-right"></i>
+                            </a>
+                          </li>
+                        </div>
+                      </ul>
+                      <label style="color: #079bd1; font-size: 12px; font-weight: 700; display: inline; margin-top: -42px;" id="bankAmount"></label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="col-md-12 p-0">
+        <div class="card mb-2" style="padding: 0px 18px; background-color: #2b3139;">
+          <div class="card-body p-2">
+            <i class="fa-solid fa-table" style="display: inline-block; color: greenyellow; font-size: 20px;"></i>
+            <label for="" style=" color: #079bd1; font-size: 12px; font-weight: 700;"> Biểu đồ thể hiện các khoản GTK
+              theo ngân hàng</label>
+            <div class="row p-2">
+              <div class="col-sm-12 text-white">
+                <table id="savingTable" class="row-border text-white" style="width:100%; color: #fff; font-size: 14px; font-weight: 600;">
+                  <thead>
+                    <tr>
+                      <th>Tên ngân hàng</th>
+                      <th>Chi tiết khoản tiết kiệm</th>
+                      <th>Ngày gửi</th>
+                      <th>Số tháng gửi</th>
+                      <th>Số tiền gửi</th>
+                      <th>Lãi suất/năm</th>
+                      <th>Tổng lãi</th>
+                      <th>Tổng tiền lãi và gốc</th>
+                      <th>Id khoản tiết kiệm</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="DA-sticky ">
+    <label class="DA-outcome-today" type="button" data-bs-toggle="modal" data-bs-target="#addIncome">
+      <i class="fa-solid fa-plus"></i>
+    </label>
+  </div>
+
+  <div class="modal fade" id="addIncome" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header p-3 bg-info">
+          <h1 class="modal-title fs-5 text-white" id="staticBackdropLabel">Quản lý tiết kiệm</h1>
+          <button type="button" class="DA-btn-close bg-info btn-close-form-create" data-bs-dismiss="modal"
+            aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="modal-body">
+          <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+              <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home"
+                type="button" role="tab" aria-controls="nav-home" aria-selected="true">Tiết kiệm</button>
+              <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile"
+                type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Ngân hàng</button>
+            </div>
+          </nav>
+          <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab"
+              tabindex="0">
+              <form class="mt-3" id="mySavingForm">
+                <div class="mb-2">
+                  <label for="exampleInputEmail1" class="form-label">Chi tiết khoản tiết kiệm</label>
+                  <input id="desc" type="text" class="form-control" aria-describedby="emailHelp" name="desc"
+                    placeholder="Tiết kiệm tháng 1">
+                  <span class="formMessage"></span>
+
+                </div>
+
+                <div class="mb-2 selectStartDate">
+                  <label class="form-label">Ngày gửi</label>
+                  <input type="datetime-local" class="form-control" name="startDate">
+                  <span class="formMessage"></span>
+
+                </div>
+
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="mb-2 inputSavingAmount">
+                      <label for="" class="form-label">Số tiền gửi</label>
+                      <input id='amount' type="text" class="form-control" name="amount" placeholder="10000000">
+                      <span class="formMessage"></span>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="mb-2 selectBankName">
+                      <label class="form-label">Ngân hàng</label>
+                      <select class="form-select" name="" aria-label="Default select example">
+                      </select>
+                      <span class="formMessage"></span>
+
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="mb-2 selectBankTerm">
+                      <label class="form-label">Kỳ hạn gửi (tháng)</label>
+                      <select class="form-select" name="" aria-label="Default select example">
+                      </select>
+                      <span class="formMessage"></span>
+
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="mb-2 inputInterestRate">
+                      <label class="form-label">Lãi suất (% năm)</label>
+                      <input type="text" class="form-control" value="" readonly>
+
+                    </div>
+                  </div>
+                </div>
+                <div class="mb-2 selectBankId">
+                  <input type="text" class="form-control" style="display: none;" name="bankInfo">
+                </div>
+
+                <div class="mb-2 selectEndDate">
+                  <label class="form-label">Ngày rút dự kiến</label>
+                  <input type="datetime-local" class="form-control" readonly name="endDate">
+                </div>
+
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="mb-2 inputInterestMoney">
+                      <label class="form-label">Tiền lãi (VNĐ)</label>
+                      <input type="text" class="form-control" value="" readonly>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="mb-2 inputTotalMoney">
+                      <label class="form-label">Tổng tiền gốc lãi (VNĐ)</label>
+                      <input type="text" class="form-control" value="" readonly>
+
+                    </div>
+                  </div>
+                </div>
+
+
+
+                <button type="submit" class="btn btn-info text-white mt-3">Lưu</button>
+                <button type="button" onclick="canculateMoney();" class="btn btn-info text-white mt-3">Tính lãi</button>
+
+              </form>
+            </div>
+
+            <!-- form tao thong tin ngan hang moi -->
+            <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
+              <form class="mt-3" id="myBankInfoForm">
+                <div class="mb-2">
+                  <label class="form-label">Tên ngân hàng</label>
+                  <input type="text" class="form-control" name="bankName">
+                  <span class="formMessage"></span>
+
+                </div>
+
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="mb-2">
+                      <label class="form-label">Kỳ hạn (tháng)</label>
+                      <input type="text" class="form-control" name="term">
+                      <span class="formMessage"></span>
+
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="mb-2">
+                      <label class="form-label">Lãi suất (% năm)</label>
+                      <input type="text" class="form-control" name="interestRate">
+                      <span class="formMessage"></span>
+
+                    </div>
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-info text-white mt-3">Lưu</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- modal sua bankinfo -->
+  <div class="modal fade" id="updateBankInfo" data-bs-backdrop="static" data-bs-keyboard="true" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header p-3 bg-info">
+          <h1 class="modal-title fs-5 text-white" id="staticBackdropLabel">Quản lý tiết kiệm</h1>
+          <button type="button" class="DA-btn-close bg-info btn-close-form-update-bankinfo" data-bs-dismiss="modal"
+            aria-label="Close">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+              <button class="nav-link active" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile"
+                type="button" role="tab" aria-controls="nav-profile" aria-selected="true">Ngân hàng
+              </button>
+            </div>
+          </nav>
+
+          <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane show active" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab"
+              tabindex="0">
+              <form class="mt-3" id="updateInfoBank">
+                <div class="mb-2">
+                  <label class="form-label">Tên ngân hàng</label>
+                  <input id="updateInfoBankName" type="text" class="form-control" name="bankName">
+                  <input id="updateInfoBankId" type="text" style="display: none;" class="form-control" name='id'>
+                  <span class="formMessage"></span>
+
+                </div>
+
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="mb-2">
+                      <label class="form-label">Kỳ hạn (tháng)</label>
+                      <input id="updateInfoBankTerm" type="text" class="form-control" name="term">
+                      <span class="formMessage"></span>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="mb-2">
+                      <label class="form-label">Lãi suất (% năm)</label>
+                      <input id="updateInfoBankInterestRate" type="text" class="form-control" name="interestRate">
+                      <span class="formMessage"></span>
+                    </div>
+                  </div>
+                </div>
+
+
+                <button type="submit" name="updateBankInfo" class="btn btn-info text-white mt-3 updatebtn">Sửa</button>
+                <button type="submit" name="deleteBankInfo" class="btn btn-danger text-white mt-3">Xóa</button>
+
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- modal sua saving -->
+  <div class="modal fade" id="updateSaving" data-bs-backdrop="static" data-bs-keyboard="true" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header p-3 bg-info">
+          <h1 class="modal-title fs-5 text-white" id="staticBackdropLabel">Quản lý tiết kiệm</h1>
+          <button type="button" class="DA-btn-close bg-info btn-close-form-update-saving" data-bs-dismiss="modal"
+            aria-label="Close">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+
+
+
+        <div class="modal-body">
+          <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+              <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home"
+                type="button" role="tab" aria-controls="nav-home" aria-selected="true">Tiết kiệm</button>
+            </div>
+          </nav>
+
+          <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab"
+              tabindex="0">
+              <form class="mt-3" id="updateInfoSaving">
+                <div class="mb-2">
+                  <label for="updateDescSaving" class="form-label">Chi tiết khoản tiết kiệm</label>
+                  <input type="text" class="form-control" id="updateDescSaving" aria-describedby="emailHelp"
+                    name="desc">
+                  <span class="formMessage"></span>
+
+                </div>
+
+                <div class="mb-2 selectStartDateUpdate">
+                  <label class="form-label">Ngày gửi</label>
+                  <input type="datetime-local" id="updateStartDateSaving" class="form-control" name="startDate">
+                  <span class="formMessage"></span>
+
+                </div>
+
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="mb-2 inputSavingAmountUpdate">
+                      <label class="form-label">Số tiền gửi</label>
+                      <input type="text" id="updateAmountSaving" class="form-control" name="amount">
+                      <span class="formMessage"></span>
+
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="mb-2 selectBankName">
+                      <label class="form-label">Ngân hàng</label>
+
+                      <input type="text" id="updateBankNameSaving" class="form-control" readonly>
+
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="mb-2 selectBankTermUpdate">
+                      <label class="form-label">Kỳ hạn gửi (tháng)</label>
+                      <input type="text" id="updateBankTermSaving" class="form-control" readonly>
+
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="mb-2 inputInterestRateUpdate">
+                      <label class="form-label">Lãi suất (% năm)</label>
+                      <input type="text" class="form-control" id="updateBankInterestRateSaving" value="" readonly>
+
+                    </div>
+                  </div>
+                </div>
+                <!-- <div class="mb-2 selectBankId">
+                            <input type="text" class="form-control" style="display: none;">
+                        </div> -->
+
+                <div class="mb-2 selectEndDateUpdate">
+                  <label class="form-label">Ngày rút dự kiến</label>
+                  <input type="datetime-local" class="form-control" readonly name="endDate">
+                  <input id="updateIdSaving" type="text" style="display: none;" class="form-control" name='id'>
+
+                </div>
+
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="mb-2 inputInterestMoneyUpdate">
+                      <label class="form-label">Tiền lãi (VNĐ)</label>
+                      <input type="text" class="form-control" value="" readonly>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="mb-2 inputTotalMoneyUpdate">
+                      <label class="form-label">Tổng tiền gốc lãi (VNĐ)</label>
+                      <input type="text" class="form-control" value="" readonly>
+
+                    </div>
+                  </div>
+                </div>
+
+
+
+                <button type="button" onclick="canculateMoneyInFormUpdate();" class="btn btn-info text-white mt-3">Tính
+                  lãi</button>
+                <button type="submit" name="updateSaving" class="btn btn-info text-white mt-3">Sửa</button>
+                <button type="submit" name="daleteSaving" class="btn btn-danger text-white mt-3">Xóa</button>
+
+              </form>
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  <script src="../plugins/bootstrap-5.3.2-dist/js/popper.min.js"></script>
+  <script src="../plugins/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../plugins/jquery/jquery-3.7.1.min.js"></script>
+  <script src="../plugins/datatables/DataTables-1.13.7/js/jquery.dataTables.min.js"></script>
+  <script src="../plugins/datatables/datatables.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script src="../js/saving.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TiềnTỷTầmTay - Chi tiêu</title>
+    <link rel="stylesheet" href="../plugins/bootstrap-5.3.2-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../plugins/fontawesome-free-6.4.2-web/css/all.min.css">
+    <link rel="stylesheet" href="../plugins/datatables/datatables.min.css">
+    <link rel="stylesheet" href="../plugins/datatables/DataTables-1.13.7/css/jquery.dataTables.min.css">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.9.2/semantic.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.semanticui.min.css"> -->
+    <link rel="stylesheet" href="../css/income.css">
+
+</head>
+
+<body style="background-color: #0b0e11;" onload="checkLogin()">
+    <nav class="navbar navbar-expand-lg bg-info" style="box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);">
+        <div class="container p-0 bg-info" style="width: 1140px;">
+            <a class="navbar-brand te" href="#">Quản lý tài chính</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="income.html">Thu nhập</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white DA-active" href="outcome.html">Chi tiêu</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" aria-current="page" href="saving.html">Tiết kiệm</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" aria-current="page" href="finance_goal.html">Mục tiêu</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link text-white dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            Thống kê
+                        </a>
+                        <ul class="dropdown-menu pt-0 pb-0" style="box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);">
+                            <li>
+                                <div class="item p-1">
+                                    <a class="dropdown-item text-dark" href="statistic_income.html">Thống kê thu nhập</a>
+                                </div>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider mt-0 mb-0">
+                            </li>
+                            <li>
+                                <div class="item p-1">
+                                    <a class="dropdown-item text-dark" href="statistic_outcome.html">Thống kê chi tiêu</a>
+                                </div>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider mt-0 mb-0">
+                            </li>
+                            <li>
+                                <div class="item p-1">
+                                    <a class="dropdown-item text-dark" href="statistic_saving.html">Thống kê tiết kiệm</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="collapse navbar-collapse ml-auto" style="justify-content: end;">
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown" id="DA-loginCheck">
+                        <a class="nav-link text-white dropdown-toggle" href="#" id="DA-HoVaTen" data-bs-toggle="dropdown" aria-expanded="false"></a>
+                        <ul class="dropdown-menu">
+                          <li><a class="dropdown-item text-dark" id="DA-profile" href="./profile.html">Thông tin tài khoản</a></li>
+                          <li><a class="dropdown-item text-dark" id="DA-logout">Đăng xuất</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+
+    <!-- tac dong tu day -->
+    <div class="container" style="width: 1140px;">
+        <div class="row mt-3">
+            <div class="col-lg-8 DA-container-table">
+                <div class="row">
+                    <div class="col-md-6" style="padding-right: 6px;">
+                        <div class="card DA-border-radius mb-2">
+                            <div class="card-body DA-border-radius"
+                                style="height: 286.03px; background-color: #2b3139; border: none;">
+                                <i class="fa-solid fa-hand-holding-dollar"
+                                    style="display: inline-block; color: greenyellow; font-size: 20px;"></i>
+                                <label id="test" style=" color: #079bd1; font-size: 12px; font-weight: 700;"> Tình hình thu chi</label>
+                                <select class="form-select DA-select" style="background-color: rgb(225, 225, 225); margin-top: 24px;" onchange="myFunction()" id="mySelect">
+                                    <option selected value="homnay">Hôm nay</option>
+                                    <option value="thangnay">Tháng này</option>
+                                </select>
+                                <canvas id="myChart" class="DA-chart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6" style="padding-left: 6px;">
+                        <div class="card DA-border-radius mb-2">
+                            <div  class="card-body DA-scoll-bar-today DA-border-radius">
+                                <i class="fa-solid fa-money-bill-transfer"
+                                    style="display: inline-block; color: greenyellow; font-size: 20px;"></i>
+                                <label style=" color: #079bd1; font-size: 12px; font-weight: 700;">Chi tiêu hôm nay</label>
+                                <!--  -->
+                                <div id="myOutcomeTransToday" class="mt-2">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- het phan thu nhap hom nay -->
+
+                </div>
+
+                <!-- Table -->
+                <div class="card DA-border-radius text-white mt-2">
+
+                    <div class="card-body DA-border-radius" style="background-color: #2b3139;">
+                        <i class="fa-solid fa-scale-unbalanced-flip" style="display: inline-block; color: greenyellow; font-size: 20px;"></i>
+                        <label for="" style=" color: #079bd1; font-size: 12px; font-weight: 700; margin-bottom: 12px;">Các khoản chi tiêu</label>
+                        <table id="outcomeTable" class="ui celled table hover" style="width:100%; font-weight: 600;">
+                            <thead>
+                                <tr>
+                                    <th>Id khoản chi</th>
+                                    <th>Chi tiết khoản chi</th>
+                                    <th style="width: 100px !important;">Ngày chi</th>
+                                    <th style="width: 96px !important;">Danh mục</th>
+                                    <th style="width: 100px !important;">Số tiền</th>
+                                </tr>
+                            </thead>
+                     
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 DA-container-category">
+                <div class="card mb-2 DA-border-radius">
+                    <div class="card-body pt-2 pb-0 DA-border-radius" style="background-color: #2b3139;">
+                        <i class="fa-solid fa-money-bill-wheat"
+                            style="display: inline-block; color: greenyellow; font-size: 20px;"></i>
+                        <label style=" color: #079bd1; font-size: 12px; font-weight: 700;" class="mb-0"> Tổng số dư</label> <br>
+                            <!-- can fill ra the duoi -->
+                        <div style="text-align: center;">
+                            <h1 id="tongsodu" class="DA-TongSoDu text-white">0</h1> 
+                            <label for="" style="display: inline-block; color: #ffff00;">VNĐ</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="card DA-border-radius" style="height: 500px;">
+                    <div class="card-body DA-scoll-bar-category pt-2 DA-border-radius">
+                        <i class="fa-solid fa-layer-group"
+                            style="display: inline-block; color: greenyellow; font-size: 20px;"></i>
+                        <label style=" color: #079bd1; font-size: 12px; font-weight: 700;">Danh mục chi</label>
+                        <ul class="DA-dropdown-menu" id="myOutcomeCategory"></ul>
+                        <!-- <ul class="DA-dropdown-menu" id="myOutcomeCategory">
+                            <li>
+                                <div class="img-icon">
+                                    <img src="../image/icon/home.jpg" alt="">
+                                </div>
+                                <a href="">Gia đình</a>
+                                <i class="icon-menu fas fa-chevron-down"></i>
+
+                                <ul class="DA-sub-menu">
+                                    <li>
+                                        <div class="img-icon">
+                                            <img src="../image/icon/sofa.jpg" alt="">
+                                        </div>
+                                        <a href="">Mua sắm đồ đạc</a>
+                                    </li>
+                                    <li>
+                                        <div class="img-icon">
+                                            <img src="../image/icon/repair_house.jpg" alt="">
+                                        </div>
+                                        <a href="">Sửa chữa nhà cửa</a>
+                                    </li>
+                                    <li>
+                                        <div class="img-icon">
+                                            <img src="../image/icon/dof.jpg" alt="">
+                                        </div>
+                                        <a href="">Thú cưng</a>
+                                    </li>
+                                    <li>
+                                        <div class="img-icon">
+                                            <img src="../image/icon/hide.jpg" alt="">
+                                        </div>
+                                        <a href="">Thuê nhà</a>
+                                    </li>
+                                </ul>
+                            </li>
+
+
+
+                            <li>
+                                <div class="img-icon">
+                                    <img src="../image/icon/hamb.jpg" alt="">
+                                </div>
+                                <a href="">Ăn uống</a>
+                                <i class="icon-menu fas fa-chevron-down"></i>
+                                <ul class="DA-sub-menu">
+                                    <li>
+                                        <div class="img-icon">
+                                            <img src="../image/icon/bag2.jpg" alt="">
+                                        </div>
+                                        <a href="">Đi chợ/siêu thị</a>
+                                    </li>
+                                    <li>
+                                        <div class="img-icon">
+                                            <img src="../image/icon/food1.jpg" alt="">
+                                        </div>
+                                        <a href="">Ăn tiệm</a>
+                                    </li>
+                                    <li>
+                                        <div class="img-icon">
+                                            <img src="../image/icon/coffee.jpg" alt="">
+                                        </div>
+                                        <a href="">Cafe</a>
+                                    </li>
+                                    <li>
+                                        <div class="img-icon">
+                                            <img src="../image/icon/food2.jpg" alt="">
+                                        </div>
+                                        <a href="">Ăn sáng</a>
+                                    </li>
+                                    <li>
+                                        <div class="img-icon">
+                                            <img src="../image/icon/food3.jpg" alt="">
+                                        </div>
+                                        <a href="">Ăn trưa</a>
+                                    </li>
+                                    <li>
+                                        <div class="img-icon">
+                                            <img src="../image/icon/food4.jpg" alt="">
+                                        </div>
+                                        <a href="">Ăn tối</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <div class="img-icon">
+                                    <img src="../image/icon/service.jpg" alt="">
+                                </div>
+                                <a href="">Dịch vụ sinh hoạt</a>
+                                <i class="icon-menu fas fa-chevron-down"></i>
+                                <ul class="DA-sub-menu">
+                                    <li>
+                                        <div class="img-icon">
+                                            <img src="../image/icon/electric.jpg" alt="">
+                                        </div>
+                                        <a href="">Điện</a></li>
+                                    <li>
+                                        <div class="img-icon">
+                                            <img src="../image/icon/water.jpg" alt="">
+                                        </div>
+                                        <a href="">Nước</a></li>
+                                    <li>
+                                        <div class="img-icon">
+                                            <img src="../image/icon/internet.jpg" alt="">
+                                        </div>
+                                        <a href="">Internet</a></li>
+                                    <li>
+                                        <div class="img-icon">
+                                            <img src="../image/icon/mobile.jpg" alt="">
+                                        </div>
+                                        <a href="">Điện thoại</a></li>
+                                    <li>
+                                        <div class="img-icon">
+                                            <img src="../image/icon/gas.jpg" alt="">
+                                        </div>
+                                        <a href="">Gas</a></li>
+                                    <li>
+                                        <div class="img-icon">
+                                            <img src="../image/icon/television.jpg" alt="">
+                                        </div>
+                                        <a href="">Truyền hình</a></li>
+                                    <li>
+                                        <div class="img-icon">
+                                            <img src="../image/icon/fix_telephone.jpg" alt="">
+                                        </div>
+                                        <a href="">Điện thoại cố định</a></li>
+                                    <li>
+                                        <div class="img-icon">
+                                            <img src="../image/icon/hoover.jpg" alt="">
+                                        </div>
+                                        <a href="">Thuê người giúp việc</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <div class="img-icon">
+                                    <img src="../image/icon/map.jpg" alt="">
+                                </div>
+                                <a href="">Đi lại</a>
+                                <i class="icon-menu fas fa-chevron-down"></i>
+                                <ul class="DA-sub-menu">
+                                    <li>
+                                        <div class="img-icon">
+                                            <img src="../image/icon/enerry.jpg" alt="">
+                                        </div>
+                                        <a href="">Xăng xe</a></li>
+                                    <li>
+                                        <div class="img-icon">
+                                            <img src="../image/icon/protect.jpg" alt="">
+                                        </div>
+                                        <a href="">Bảo hiểm</a></li>
+                                    <li>
+                                        <div class="img-icon">
+                                            <img src="../image/icon/repair.jpg" alt="">
+                                        </div>
+                                        <a href="">Sửa chữa/bảo dưỡng</a></li>
+                                    <li>
+                                        <div class="img-icon">
+                                            <img src="../image/icon/parking.jpg" alt="">
+                                        </div>
+                                        <a href="">Gửi xe</a></li>
+                                    <li>
+                                        <div class="img-icon">
+                                            <img src="../image/icon/clear_car.jpg" alt="">
+                                        </div>
+                                        <a href="">Rửa xe</a></li>
+                                    <li>
+                                        <div class="img-icon">
+                                            <img src="../image/icon/taxi.jpg" alt="">
+                                        </div>
+                                        <a href="">Taxi/thuê xe</a></li>
+                                    <li>
+                                        <div class="img-icon">
+                                            <img src="../image/icon/money.jpg" alt="">
+                                        </div>
+                                        <a href="">Phí cầu đường</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <div class="img-icon">
+                                    <img src="../image/icon/child.jpg" alt="">
+                                </div>
+                                <a href="">Con cái</a>
+                                <i class="icon-menu fas fa-chevron-down"></i>
+                                <ul class="DA-sub-menu">
+                                    <li>
+                                        <div class="img-icon">
+                                            <img src="../image/icon/fees.jpg" alt="">
+                                        </div>
+                                        <a href="">Học phí</a></li>
+                                    <li>
+                                        <div class="img-icon">
+                                            <img src="../image/icon/book.jpg" alt="">
+                                        </div>
+                                        <a href="">Sách vở</a></li>
+                                    <li>
+                                        <div class="img-icon">
+                                            <img src="../image/icon/milk.jpg" alt="">
+                                        </div>
+                                        <a href="">Sữa/bỉm</a></li>
+                                    <li>
+                                        <div class="img-icon">
+                                            <img src="../image/icon/toy.jpg" alt="">
+                                        </div>
+                                        <a href="">Đồ chơi</a></li>
+                                    <li>
+                                        <div class="img-icon">
+                                            <img src="../image/icon/money.jpg" alt="">
+                                        </div>
+                                        <a href="">Tiêu vặt</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <div class="img-icon">
+                                    <img src="../image/icon/clothers.jpg" alt="">
+                                </div>
+                                <a href="">Trang phục</a>
+                                <i class="icon-menu fas fa-chevron-down"></i>
+                                <ul class="DA-sub-menu">
+                                    <li>
+                                        <div class="img-icon">
+                                            <img src="../image/icon/pants.jpg" alt="">
+                                        </div>
+                                        <a href="">Quần áo</a></li>
+                                    <li>
+                                        <div class="img-icon">
+                                            <img src="../image/icon/shoes.jpg" alt="">
+                                        </div>
+                                        <a href="">Giày dép</a></li>
+                                    <li>
+                                        <div class="img-icon">
+                                            <img src="../image/icon/ring.jpg" alt="">
+                                        </div>
+                                        <a href="">Trang sức</a></li>
+                                    <li>
+                                        <div class="img-icon">
+                                            <img src="../image/icon/watch.jpg" alt="">
+                                        </div>
+                                        <a href="">Phụ kiện khác</a></li>
+                                </ul>
+                            </li>
+                            
+                            <li>
+                                <div class="img-icon">
+                                    <img src="../image/icon/flower.jpg" alt="">
+                                </div>
+                                <a href="">Hiếu hỷ</a>
+                                <i class="icon-menu fas fa-chevron-down"></i>
+                                <ul class="DA-sub-menu">
+                                    <li>
+                                        <div class="img-icon">
+                                            <img src="../image/icon/ring.jpg" alt="">
+                                        </div>
+                                        <a href="">Cưới xin</a></li>
+                                    <li>
+                                        <div class="img-icon">
+                                            <img src="../image/icon/flower_ring.jpg" alt="">
+                                        </div>
+                                        <a href="">Ma chay</a></li>
+                                    <li>
+                                        <div class="img-icon">
+                                            <img src="../image/icon/bed.jpg" alt="">
+                                        </div>
+                                        <a href="">Thăm hỏi</a></li>
+                                    <li>
+                                        <div class="img-icon">
+                                            <img src="../image/icon/gift.jpg" alt="">
+                                        </div>
+                                        <a href="">Biếu tặng</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <div class="img-icon">
+                                    <img src="../image/icon/red_plus.jpg" alt="">
+                                </div>
+                                <a href="">Sức khỏe</a>
+                                <i class="icon-menu fas fa-chevron-down"></i>
+                                <ul class="DA-sub-menu">
+                                    <li>
+                                        <div class="img-icon">
+                                            <img src="../image/icon/doctor.jpg" alt="">
+                                        </div>
+                                        <a href="">Khám chữa bệnh</a></li>
+                                    <li>
+                                        <div class="img-icon">
+                                            <img src="../image/icon/protected.jpg" alt="">
+                                        </div>
+                                        <a href="">Bảo hiểm sức khỏe</a></li>
+                                    <li>
+                                        <div class="img-icon">
+                                            <img src="../image/icon/capsule.jpg" alt="">
+                                        </div>
+                                        <a href="">Thuốc</a></li>
+                                    <li>
+                                        <div class="img-icon">
+                                            <img src="../image/icon/badminton.jpg" alt="">
+                                        </div>
+                                        <a href="">Thể thao</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <div class="img-icon">
+                                    <img src="../image/icon/bag.jpg" alt="">
+                                </div>
+                                <a href="">Hưởng thụ</a>
+                                <i class="icon-menu fas fa-chevron-down"></i>
+                                <ul class="DA-sub-menu">
+                                    <li>
+                                        <div class="img-icon">
+                                            <img src="../image/icon/play.jpg" alt="">
+                                        </div>
+                                        <a href="">Vui chơi, giải trí</a></li>
+                                    <li>
+                                        <div class="img-icon">
+                                            <img src="../image/icon/travel.jpg" alt="">
+                                        </div>
+                                        <a href="">Du lịch</a></li>
+                                    <li>
+                                        <div class="img-icon">
+                                            <img src="../image/icon/beauty.jpg" alt="">
+                                        </div>
+                                        <a href="">Làm đẹp</a></li>
+                                    <li>
+                                        <div class="img-icon">
+                                            <img src="../image/icon/cinema.jpg" alt="">
+                                        </div>
+                                        <a href="">Phim ảnh, ca nhạc</a></li>
+                                    <li>
+                                        <div class="img-icon">
+                                            <img src="../image/icon/ballon.jpg" alt="">
+                                        </div>
+                                        <a href="">Tiệc tùng</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <div class="img-icon">
+                                    <img src="../image/icon/me.jpg" alt="">
+                                </div>
+                                <a href="">Phát triển bản thân</a>
+                                <i class="icon-menu fas fa-chevron-down"></i>
+                                <ul class="DA-sub-menu">
+                                    <li>
+                                        <div class="img-icon">
+                                            <img src="../image/icon/study.jpg" alt="">
+                                        </div>
+                                        <a href="">Học tập</a></li>
+                                    <li>
+                                        <div class="img-icon">
+                                            <img src="../image/icon/exchanges.jpg" alt="">
+                                        </div>
+                                        <a href="">Giao lưu, quan hệ</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <div class="img-icon">
+                                    <img src="../image/icon/bag3.jpg" alt="">
+                                </div>
+                                <a href="">Đồ dùng</a>
+                                <i class="icon-menu fas fa-chevron-down"></i>
+                                <ul class="DA-sub-menu">
+                                    <li>
+                                        <div class="img-icon">
+                                            <img src="../image/icon/camera.jpg" alt="">
+                                        </div>
+                                        <a href="">Trang thiết bị</a></li>
+                                    <li>
+                                        <div class="img-icon">
+                                            <img src="../image/icon/cosmetic.jpg" alt="">
+                                        </div>
+                                        <a href="">Mỹ phẩm</a></li>
+                                    <li>
+                                        <div class="img-icon">
+                                            <img src="../image/icon/smartphone.jpg" alt="">
+                                        </div>
+                                        <a href="">Đồ dùng cá nhân</a></li>
+                                    <li>
+                                        <div class="img-icon">
+                                            <img src="../image/icon/ruler.jpg" alt="">
+                                        </div>
+                                        <a href="">Dụng cụ</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <div class="img-icon">
+                                    <img src="../image/icon/bank.jpg" alt="">
+                                </div>
+                                <a href="">Ngân hàng</a>
+                                <i class="icon-menu fas fa-chevron-down"></i>
+        
+                            </li>
+                        </ul> -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="DA-sticky ">
+        <label class="DA-outcome-today" type="button" data-bs-toggle="modal" data-bs-target="#addIncomeTransactionAndCategory">
+            <i class="fa-solid fa-plus"></i>
+        </label>
+    </div>
+
+    <div class="modal fade" id="addIncomeTransactionAndCategory" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header p-3 bg-info">
+                    <h1 class="modal-title fs-5 text-white" id="staticBackdropLabel">Quản lý chi tiêu</h1>
+                    <button type="button" class="DA-btn-close bg-info btn-close-form-create" data-bs-dismiss="modal" aria-label="Close"><i
+                            class="fa-solid fa-xmark"></i></button>
+                </div>
+
+                <div class="modal-body">
+                    <nav>
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                            <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab"
+                                data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home"
+                                aria-selected="true">Khoản chi</button>
+                            <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab"
+                                data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile"
+                                aria-selected="false">Danh mục</button>
+                        </div>
+                    </nav>
+
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
+                            aria-labelledby="nav-home-tab" tabindex="0">
+                            <form class="mt-3" id="myOutcome">
+                                <div class="mb-2">
+                                    <label for="exampleInputEmail1" class="form-label">Chi tiết khoản chi</label>
+                                    <input type="text" class="form-control" id="exampleInputEmail1"
+                                        aria-describedby="emailHelp" name="desc">
+                                    <span class="formMessage"></span>
+
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="mb-2">
+                                            <label class="form-label">Số tiền</label>
+                                            <input type="text" class="form-control" name="amount">
+                                    <span class="formMessage"></span>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="mb-2 selectOutcomeCategory">
+                                            <label class="form-label">Danh mục</label>
+                                            <select class="form-select" name="category" aria-label="Default select example">
+                                            </select>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-2">
+                                    <label class="form-label">Ngày chi</label>
+                                    <input type="datetime-local" class="form-control" name="time">
+                                    <span class="formMessage"></span>
+
+                                </div>
+                                <button type="submit" class="btn btn-info text-white mt-3">Lưu</button>
+                            </form>
+                        </div>
+
+                        <!-- them moi danh muc -->
+                        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab"
+                            tabindex="0">
+                            <form class="mt-3" id="myCategory">
+                                <div class="mb-2 selectParentCategory">
+                                    <label class="form-label">Chọn danh mục cha</label>
+                                    <select class="form-select" name="parent" aria-label="Default select example">
+    
+                                    </select>
+                                  </div>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="mb-2" style="text-align: center;">
+                                            <label class="form-label">Icon</label>
+                                            <div class="DA-slIcon">
+                                                <img id="createIconOutcomeCategory" src="../image/icon/click.png" alt="" class="DA-open-modal">
+                                                <input id= "createSourceOutcomeCategory" type="text" style="display: none;" class="form-control" name = 'icon' value="http://127.0.0.1:5500/da-frontend/front-end/Main/image/icon/award.png">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <div class="mb-2">
+                                            <label class="form-label">Tên danh mục</label>
+                                            <input id= "createNameIncomeCategory" type="text" class="form-control" name = 'name'>
+                                            <span class="formMessage"></span>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <button type="submit" class="btn btn-info text-white mt-3">Lưu</button>
+                            </form>
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- modal sua category -->
+    <div class="modal fade" id="updateOutcomeCategory" data-bs-backdrop="static" data-bs-keyboard="true" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header p-3 bg-info">
+                    <h1 class="modal-title fs-5 text-white" id="staticBackdropLabel">Quản lý chi tiêu</h1>
+                    <button type="button" class="DA-btn-close bg-info btn-close-form-update-category" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <nav>
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                            <button class="nav-link active" id="nav-profile-tab" data-bs-toggle="tab"
+                                data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile"
+                                aria-selected="true">Danh mục
+                            </button>
+                        </div>
+                    </nav>
+
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane show active" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab"
+                            tabindex="0">
+                            <form class="mt-3" id="updateInfoCategory">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="mb-2" style="text-align: center;">
+                                            <label class="form-label">Icon</label>
+                                            <div class="DA-slIcon">
+                                                <img id="updateIconOutcomeCategory" src="../image/icon/icondefault.jpg" alt="" class="DA-open-modal">
+                                                <input id= "updateSourceOutcomeCategory" type="text" style="display: none;" class="form-control" name = 'icon'>
+                                                <input id= "updateIdOutcomeCategory" type="text" style="display: none;" class="form-control" name = 'id'>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-8">
+                                        <div class="mb-2">
+                                            <label class="form-label">Tên danh mục</label>
+                                            <input id= "updateNameOutcomeCategory" type="text" class="form-control" name = 'name'>
+                                            <span class="formMessage"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <button type="submit" name="updateOutcomeCategory" class="btn btn-info text-white mt-3 updatebtn">Sửa</button>
+                                <button type="submit" name="daleteOutcomeCategory" class="btn btn-danger text-white mt-3">Xóa</button>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+<!-- modal sua transaction -->
+<div class="modal fade" id="updateOutcomeTransaction" data-bs-backdrop="static" data-bs-keyboard="true" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header p-3 bg-info">
+                <h1 class="modal-title fs-5 text-white" id="staticBackdropLabel">Quản lý chi tiêu</h1>
+                <button type="button" class="DA-btn-close bg-info btn-close-form-update-transaction" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+
+
+            <div class="modal-body">
+                <nav>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+
+
+                        <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab"
+                                data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home"
+                                aria-selected="true">Khoản chi</button>
+                    </div>
+                </nav>
+
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
+                            aria-labelledby="nav-home-tab" tabindex="0">
+                        <form class="mt-3" id="updateInfoTransaction">
+                            <div class="mb-2">
+                                <label for="exampleInputEmail1" class="form-label">Chi tiết khoản chi</label>
+                                <input type="text" class="form-control" id="updateDescOutcomeTransaction"
+                                    aria-describedby="emailHelp" name="desc">
+                                    <span class="formMessage"></span>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="mb-2">
+                                        <label class="form-label">Số tiền</label>
+                                        <input type="text" id="updateAmountOutcomeTransaction" class="form-control" name="amount">
+                                    <span class="formMessage"></span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="mb-2">
+                                        <label class="form-label">Danh mục</label>
+                                        <input type="text" class="form-control" id="updateCategoryOutcomeTransaction" readonly
+                                    aria-describedby="emailHelp">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-2">
+                                <label class="form-label">Ngày chi</label>
+                                <input type="datetime-local" id="updateTimeOutcomeTransaction" class="form-control" name="time">
+                                <span class="formMessage"></span>
+                                <input id= "updateIdOutcomeTransaction" type="text" style="display: none;" class="form-control" name = 'id'>
+
+                            </div>
+                            <button type="submit" name="updateOutcomeTransaction" class="btn btn-info text-white mt-3">Sửa</button>
+                            <button type="submit" name="daleteOutcomeTransaction" class="btn btn-danger text-white mt-3">Xóa</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- icon -->
+    <div class="DA-overlay" id="overlayModalIcon"></div>
+    <div class="DA-overlay" id="DA-overlayNullorMoney"></div>
+
+    <div class="DA-modal" id="modalIcon">
+        <h4 align = center>Chọn icon</h4>
+        <div class="card">
+            <div class="card-body DA-icon-list">
+            <div class="row">
+                <div class="col-md-2" style="padding: 0 6px;">
+                    <div class="DA-OpIcon">
+                        <img src="../image/icon/award.png" alt="">
+                    </div>
+                </div>
+                <div class="col-md-2" style="padding: 0 6px;">
+                    <div class="DA-OpIcon">
+                        <img src="../image/icon/badminton.jpg" alt="">
+                    </div>
+                </div>
+                <div class="col-md-2" style="padding: 0 6px;">
+                    <div class="DA-OpIcon">
+                        <img src="../image/icon/bag.jpg" alt="">
+                    </div>
+                </div>
+                <div class="col-md-2" style="padding: 0 6px;">
+                    <div class="DA-OpIcon">
+                        <img src="../image/icon/bag2.jpg" alt="">
+                    </div>
+                </div>
+                <div class="col-md-2" style="padding: 0 6px;">
+                    <div class="DA-OpIcon">
+                        <img src="../image/icon/bag3.jpg" alt="">
+                    </div>
+                </div>
+                <div class="col-md-2" style="padding: 0 6px;">
+                    <div class="DA-OpIcon">
+                        <img src="../image/icon/ballon.jpg" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-2" style="padding: 0 6px;">
+                    <div class="DA-OpIcon">
+                        <img src="../image/icon/bank.jpg" alt="">
+                    </div>
+                </div>
+                <div class="col-md-2" style="padding: 0 6px;">
+                    <div class="DA-OpIcon">
+                        <img src="../image/icon/beauty.jpg" alt="">
+                    </div>
+                </div>
+                <div class="col-md-2" style="padding: 0 6px;">
+                    <div class="DA-OpIcon">
+                        <img src="../image/icon/bed.jpg" alt="">
+                    </div>
+                </div>
+                <div class="col-md-2" style="padding: 0 6px;">
+                    <div class="DA-OpIcon">
+                        <img src="../image/icon/book.jpg" alt="">
+                    </div>
+                </div>
+                <div class="col-md-2" style="padding: 0 6px;">
+                    <div class="DA-OpIcon">
+                        <img src="../image/icon/camera.jpg" alt="">
+                    </div>
+                </div>
+                <div class="col-md-2" style="padding: 0 6px;">
+                    <div class="DA-OpIcon">
+                        <img src="../image/icon/canva-money.png" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-2" style="padding: 0 6px;">
+                    <div class="DA-OpIcon">
+                        <img src="../image/icon/capsule.jpg" alt="">
+                    </div>
+                </div>
+                <div class="col-md-2"  style="padding: 0 6px;">
+                    <div class="DA-OpIcon">
+                        <img src="../image/icon/child.jpg" alt="">
+                    </div>
+                </div>
+                <div class="col-md-2"  style="padding: 0 6px;">
+                    <div class="DA-OpIcon">
+                        <img src="../image/icon/cinema.jpg" alt="">
+                    </div>
+                </div>
+                <div class="col-md-2"  style="padding: 0 6px;">
+                    <div class="DA-OpIcon">
+                        <img src="../image/icon/clear_car.jpg" alt="">
+                    </div>
+                </div>
+                <div class="col-md-2"  style="padding: 0 6px;">
+                    <div class="DA-OpIcon">
+                        <img src="../image/icon/clothers.jpg" alt="">
+                    </div>
+                </div>
+                <div class="col-md-2"  style="padding: 0 6px;">
+                    <div class="DA-OpIcon">
+                        <img src="../image/icon/coffee.jpg" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-2" style="padding: 0 6px;">
+                    <div class="DA-OpIcon">
+                        <img src="../image/icon/cosmetic.jpg" alt="">
+                    </div>
+                </div>
+                <div class="col-md-2"  style="padding: 0 6px;">
+                    <div class="DA-OpIcon">
+                        <img src="../image/icon/doctor.jpg" alt="">
+                    </div>
+                </div>
+                <div class="col-md-2"  style="padding: 0 6px;">
+                    <div class="DA-OpIcon">
+                        <img src="../image/icon/dof.jpg" alt="">
+                    </div>
+                </div>
+                <div class="col-md-2"  style="padding: 0 6px;">
+                    <div class="DA-OpIcon">
+                        <img src="../image/icon/electric.jpg" alt="">
+                    </div>
+                </div>
+                <div class="col-md-2"  style="padding: 0 6px;">
+                    <div class="DA-OpIcon">
+                        <img src="../image/icon/enerry.jpg" alt="">
+                    </div>
+                </div>
+                <div class="col-md-2"  style="padding: 0 6px;">
+                    <div class="DA-OpIcon">
+                        <img src="../image/icon/exchanges.jpg" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-2" style="padding: 0 6px;">
+                    <div class="DA-OpIcon">
+                        <img src="../image/icon/fees.jpg" alt="">
+                    </div>
+                </div>
+                <div class="col-md-2"  style="padding: 0 6px;">
+                    <div class="DA-OpIcon">
+                        <img src="../image/icon/fix_telephone.jpg" alt="">
+                    </div>
+                </div>
+                <div class="col-md-2"  style="padding: 0 6px;">
+                    <div class="DA-OpIcon">
+                        <img src="../image/icon/flower.jpg" alt="">
+                    </div>
+                </div>
+                <div class="col-md-2"  style="padding: 0 6px;">
+                    <div class="DA-OpIcon">
+                        <img src="../image/icon/flower_ring.jpg" alt="">
+                    </div>
+                </div>
+                <div class="col-md-2"  style="padding: 0 6px;">
+                    <div class="DA-OpIcon">
+                        <img src="../image/icon/food1.jpg" alt="">
+                    </div>
+                </div>
+                <div class="col-md-2"  style="padding: 0 6px;">
+                    <div class="DA-OpIcon">
+                        <img src="../image/icon/food2.jpg" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-2" style="padding: 0 6px;">
+                    <div class="DA-OpIcon">
+                        <img src="../image/icon/food3.jpg" alt="">
+                    </div>
+                </div>
+                <div class="col-md-2"  style="padding: 0 6px;">
+                    <div class="DA-OpIcon">
+                        <img src="../image/icon/food4.jpg" alt="">
+                    </div>
+                </div>
+                <div class="col-md-2"  style="padding: 0 6px;">
+                    <div class="DA-OpIcon">
+                        <img src="../image/icon/gas.jpg" alt="">
+                    </div>
+                </div>
+                <div class="col-md-2"  style="padding: 0 6px;">
+                    <div class="DA-OpIcon">
+                        <img src="../image/icon/gift.jpg" alt="">
+                    </div>
+                </div>
+                <div class="col-md-2"  style="padding: 0 6px;">
+                    <div class="DA-OpIcon">
+                        <img src="../image/icon/gift.png" alt="">
+                    </div>
+                </div>
+                <div class="col-md-2"  style="padding: 0 6px;">
+                    <div class="DA-OpIcon">
+                        <img src="../image/icon/hamb.jpg" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-2" style="padding: 0 6px;">
+                    <div class="DA-OpIcon">
+                        <img src="../image/icon/hide.jpg" alt="">
+                    </div>
+                </div>
+                <div class="col-md-2"  style="padding: 0 6px;">
+                    <div class="DA-OpIcon">
+                        <img src="../image/icon/home.jpg" alt="">
+                    </div>
+                </div>
+                <div class="col-md-2"  style="padding: 0 6px;">
+                    <div class="DA-OpIcon">
+                        <img src="../image/icon/hoover.jpg" alt="">
+                    </div>
+                </div>
+                <div class="col-md-2"  style="padding: 0 6px;">
+                    <div class="DA-OpIcon">
+                        <img src="../image/icon/internet.jpg" alt="">
+                    </div>
+                </div>
+                <div class="col-md-2"  style="padding: 0 6px;">
+                    <div class="DA-OpIcon">
+                        <img src="../image/icon/khac.png" alt="">
+                    </div>
+                </div>
+                <div class="col-md-2"  style="padding: 0 6px;">
+                    <div class="DA-OpIcon">
+                        <img src="../image/icon/lai.png" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-2" style="padding: 0 6px;">
+                    <div class="DA-OpIcon">
+                        <img src="../image/icon/luong.png" alt="">
+                    </div>
+                </div>
+                <div class="col-md-2"  style="padding: 0 6px;">
+                    <div class="DA-OpIcon">
+                        <img src="../image/icon/lai_tiet_kiem.png" alt="">
+                    </div>
+                </div>
+                <div class="col-md-2"  style="padding: 0 6px;">
+                    <div class="DA-OpIcon">
+                        <img src="../image/icon/map.jpg" alt="">
+                    </div>
+                </div>
+                <div class="col-md-2"  style="padding: 0 6px;">
+                    <div class="DA-OpIcon">
+                        <img src="../image/icon/me.jpg" alt="">
+                    </div>
+                </div>
+                <div class="col-md-2"  style="padding: 0 6px;">
+                    <div class="DA-OpIcon">
+                        <img src="../image/icon/milk.jpg" alt="">
+                    </div>
+                </div>
+                <div class="col-md-2"  style="padding: 0 6px;">
+                    <div class="DA-OpIcon">
+                        <img src="../image/icon/mobile.jpg" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-2" style="padding: 0 6px;">
+                    <div class="DA-OpIcon">
+                        <img src="../image/icon/money.jpg" alt="">
+                    </div>
+                </div>
+                <div class="col-md-2"  style="padding: 0 6px;">
+                    <div class="DA-OpIcon">
+                        <img src="../image/icon/pants.jpg" alt="">
+                    </div>
+                </div>
+                <div class="col-md-2"  style="padding: 0 6px;">
+                    <div class="DA-OpIcon">
+                        <img src="../image/icon/parking.jpg" alt="">
+                    </div>
+                </div>
+                <div class="col-md-2"  style="padding: 0 6px;">
+                    <div class="DA-OpIcon">
+                        <img src="../image/icon/play.jpg" alt="">
+                    </div>
+                </div>
+                <div class="col-md-2"  style="padding: 0 6px;">
+                    <div class="DA-OpIcon">
+                        <img src="../image/icon/protect.jpg" alt="">
+                    </div>
+                </div>
+                <div class="col-md-2"  style="padding: 0 6px;">
+                    <div class="DA-OpIcon">
+                        <img src="../image/icon/protected.jpg" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-2" style="padding: 0 6px;">
+                    <div class="DA-OpIcon">
+                        <img src="../image/icon/red_plus.jpg" alt="">
+                    </div>
+                </div>
+                <div class="col-md-2"  style="padding: 0 6px;">
+                    <div class="DA-OpIcon">
+                        <img src="../image/icon/repair.jpg" alt="">
+                    </div>
+                </div>
+                <div class="col-md-2"  style="padding: 0 6px;">
+                    <div class="DA-OpIcon">
+                        <img src="../image/icon/repair_house.jpg" alt="">
+                    </div>
+                </div>
+                <div class="col-md-2"  style="padding: 0 6px;">
+                    <div class="DA-OpIcon">
+                        <img src="../image/icon/ring.jpg" alt="">
+                    </div>
+                </div>
+                <div class="col-md-2"  style="padding: 0 6px;">
+                    <div class="DA-OpIcon">
+                        <img src="../image/icon/ruler.jpg" alt="">
+                    </div>
+                </div>
+                <div class="col-md-2"  style="padding: 0 6px;">
+                    <div class="DA-OpIcon">
+                        <img src="../image/icon/service.jpg" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-2" style="padding: 0 6px;">
+                    <div class="DA-OpIcon">
+                        <img src="../image/icon/shoes.jpg" alt="">
+                    </div>
+                </div>
+                <div class="col-md-2"  style="padding: 0 6px;">
+                    <div class="DA-OpIcon">
+                        <img src="../image/icon/smartphone.jpg" alt="">
+                    </div>
+                </div>
+                <div class="col-md-2"  style="padding: 0 6px;">
+                    <div class="DA-OpIcon">
+                        <img src="../image/icon/sofa.jpg" alt="">
+                    </div>
+                </div>
+                <div class="col-md-2"  style="padding: 0 6px;">
+                    <div class="DA-OpIcon">
+                        <img src="../image/icon/study.jpg" alt="">
+                    </div>
+                </div>
+                <div class="col-md-2"  style="padding: 0 6px;">
+                    <div class="DA-OpIcon">
+                        <img src="../image/icon/taxi.jpg" alt="">
+                    </div>
+                </div>
+                <div class="col-md-2"  style="padding: 0 6px;">
+                    <div class="DA-OpIcon">
+                        <img src="../image/icon/television.jpg" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-2" style="padding: 0 6px;">
+                    <div class="DA-OpIcon">
+                        <img src="../image/icon/toy.jpg" alt="">
+                    </div>
+                </div>
+                <div class="col-md-2"  style="padding: 0 6px;">
+                    <div class="DA-OpIcon">
+                        <img src="../image/icon/travel.jpg" alt="">
+                    </div>
+                </div>
+                <div class="col-md-2"  style="padding: 0 6px;">
+                    <div class="DA-OpIcon">
+                        <img src="../image/icon/watch.jpg" alt="">
+                    </div>
+                </div>
+                <div class="col-md-2"  style="padding: 0 6px;">
+                    <div class="DA-OpIcon">
+                        <img src="../image/icon/water.jpg" alt="">
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+        <button class="DA-close-modal btn btn-danger mt-3">Close</button>
+    </div>
+    <div class="DA-modal" id="modalMoneyStart">
+        <h4 align = center>Thêm khoản tiền đang có</h4>
+        <div class="card">
+            <input type="number" class="form-control" id="DA-inpMoney">
+        </div>
+        <button class="DA-close-modal btn btn-info mt-3 text-white" id="DA-setMoney">Thêm</button>
+    </div>
+
+
+
+    <script src="../plugins/bootstrap-5.3.2-dist/js/popper.min.js"></script>
+    <script src="../plugins/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../plugins/jquery/jquery-3.7.1.min.js"></script>
+    <script src="../plugins/datatables/DataTables-1.13.7/js/jquery.dataTables.min.js"></script>
+    <script src="../plugins/datatables/datatables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../js/outcome.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,141 @@
+.DA-sticky{
+    position: fixed;
+    bottom: 50px;
+    right: 50px;
+    width: 50px;
+    height: 50px;
+}
+#navbarNavDropdown ul li:hover{
+    background-color: #69a5ff;
+    border-radius: 6px;
+  }
+  #navbarNavDropdown>ul>li{
+    margin-right: 6px;
+  }
+  #navbarNavDropdown ul li:hover,
+  #navbarNavDropdown ul li ul li a:hover{
+    background-color: #69a5ff;
+    border-radius: 6px;
+    color: #fff !important;
+  }
+  .DA-active{
+    background-color: #69a5ff;
+    border-radius: 6px;
+  }
+.DA-outcome-today{
+    display: block;
+    font-size: 24px !important; 
+    float: inline-end;
+    width: 50px;
+    height: 50px;
+    background-color: #69a5ff;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 50px;
+    color: #fff;
+    box-shadow: 0 0 26px rgba(255, 255, 255, 0.397);
+}
+.DA-outcome-today:hover{
+    background-color: #86b7fe;
+    color: #fff;
+    font-size: 30px !important;
+}
+.DA-btn-close{
+    border: none;
+    color: #fff;
+    font-size: 24px;
+}
+.DA-btn-close:hover{
+    color: red;
+    border-radius: 50%;
+    
+}
+.DA-general-style{
+    background-color: #fee7d7; 
+    border-radius: 8px;
+    height: 56px;
+}
+.DA-circle{
+    height: 40px;
+    width: 40px;
+    background-color: burlywood;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 20px;
+    text-align: center;
+    line-height: 30px;
+    border: solid 4px #ffffff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+}
+.info-tktk{
+    color: #000;
+    font-size: 10px;
+    font-weight: 700;
+    padding-bottom: 10px;
+}
+.money-tktk{
+    color: #1c73ff;
+    font-size: 17px;
+    font-weight: 700;
+    margin-top: -9px;
+}
+.DA-bank-style{
+    background-color: #252526;
+    border-radius: 8px;
+    height: 34px;
+    font-size: 12px;
+    color: #fee7d7;
+    cursor: pointer;
+}
+.bankName{
+    color: #03a5e0;
+}
+.bankAmount{
+    color: #0ecb74;
+    float: inline-end;
+}
+.banklabel{
+    color: #ffff00;
+}
+.DA-scoll-bar-bank{
+    height: 305px;
+    overflow-x:hidden;
+    overflow-y:auto;
+}
+::-webkit-scrollbar {
+    width: 4px;
+}
+::-webkit-scrollbar-thumb {
+    background-color: rgb(59, 59, 59);
+    border-radius: 3px;
+}
+.dropdown-toggle::after {
+    display: none !important;
+}
+.DA-bank-style.dropdown-menu{
+    --bs-dropdowwn-min-width: 106px !important;
+}
+
+
+/* bo sung  17/12 */
+.invalid .form-control {
+    border-color: #f33a58;
+  }
+  
+.invalid .formMessage {
+    color: #f33a58;
+  }
+  #savingTable tbody tr td:nth-child(5) {
+    color: #1eff00d8; 
+  }
+  #savingTable tbody tr td:nth-child(6) {
+    text-align: center !important;
+
+  }
+  #savingTable tbody tr td:nth-child(8) {
+    color: rgb(13,202,240); 
+
+  }
+  #savingTable thead tr th:nth-child(8) {
+    width: 95px !important;
+  }

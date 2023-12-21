@@ -1,0 +1,42 @@
+.DA-chart{
+    height: 196px !important;
+    padding-top: 14px;
+    padding-bottom: 12px;
+}
+.DA-general-style{
+    background-color: #d0f2fc; 
+    border-radius: 8px;
+    height: 72px;
+}
+.DA-circle{
+    height: 50px;
+    width: 50px;
+    background-color: burlywood;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 20px;
+    text-align: center;
+    line-height: 39px;
+    border: solid 4px #ffffff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+}
+.info-tktk{
+    color: #000;
+    font-size: 14px;
+    padding-bottom: 14px;
+}
+.money-tktk{
+    color: #1c73ff;
+    font-size: 20px;
+    margin-top: -9px;
+}
+.table td, .table th {
+    padding: 4px;
+    padding-left: 18px;
+    width: 50px;
+    vertical-align: top;
+    border-top: 1px solid #44515d;
+}
+.table tbody tr th {
+    padding-left: 34px;
+}

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TiềnTỷTầmTay - Thống kê tiết kiệm</title>
+    <link rel="stylesheet" href="../plugins/bootstrap-5.3.2-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../plugins/fontawesome-free-6.4.2-web/css/all.min.css">
+    <link rel="stylesheet" href="../plugins/datatables/datatables.min.css">
+    <link rel="stylesheet" href="../plugins/datatables/DataTables-1.13.7/css/jquery.dataTables.min.css">
+    <!-- <link rel="stylesheet" href="../css/income.css"> -->
+    <link rel="stylesheet" href="../css/statistic_saving.css">
+    
+</head>
+<body style="background-color: #0b0e11;">
+    <nav class="navbar navbar-expand-lg bg-info" style="box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);">
+        <div class="container p-0 bg-info" style="width: 1140px;">
+          <a class="navbar-brand te" href="#">Quản lý tài chính</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link text-white" href="income.html">Thu nhập</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-white" href="outcome.html">Chi tiêu</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-white" aria-current="page" href="saving.html">Tiết kiệm</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-white" aria-current="page" href="finance_goal.html">Mục tiêu</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link text-white dropdown-toggle DA-active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Thống kê
+                </a>
+                <ul class="dropdown-menu pt-0 pb-0" style="box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);">
+                  <li>
+                    <div class="item p-1">
+                        <a class="dropdown-item" href="statistic_income.html">Thống kê thu nhập</a>
+                    </div>
+                  </li>
+                  <li><hr class="dropdown-divider mt-0 mb-0"></li>
+                  <li>
+                    <div class="item p-1">
+                        <a class="dropdown-item" href="statistic_outcome.html">Thống kê chi tiêu</a>
+                    </div>
+                  </li>
+                  <li><hr class="dropdown-divider mt-0 mb-0"></li>
+                  <li>
+                    <div class="item p-1">
+                        <a class="dropdown-item " href="statistic_saving.html">Thống kê tiết kiệm</a>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+          
+          <div class="collapse navbar-collapse ml-auto" style="justify-content: end;">
+            <ul class="navbar-nav">
+              <li class="nav-item dropdown" id="DA-loginCheck">
+                <a class="nav-link text-white dropdown-toggle" href="#" id="DA-HoVaTen" data-bs-toggle="dropdown" aria-expanded="false"></a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item text-dark" id="DA-profile" href="./profile.html">Thông tin tài khoản</a></li>
+                  <li><a class="dropdown-item text-dark" id="DA-logout">Đăng xuất</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+    </nav>
+    <div class="container" style="width: 1140px; height: 688px;">
+      <div class="row mt-3">
+        <div class="col-lg-8 pr-2" style="height: 650px;">
+          <div class="row">
+            <div class="col-md-5" style="padding-left: 0px; padding-right: 6px;">
+              <div class="card mb-2" style="padding: 0px 18px; background-color: #2b3139;">
+                <div class="card-body p-2">
+                  <i class="fa-solid fa-piggy-bank" style="display: inline-block; color: greenyellow; font-size: 20px;"></i>
+                  <label for="" style=" color: #079bd1; font-size: 12px; font-weight: 700;"> Thông tin tiết kiệm</label>
+                  <div class="row p-2">
+                    <div class="col-sm-12">
+                      <div class="row mb-2 DA-general-style">
+                        <div class="col-sm-3 align-self-center" style="padding-left: 14px;">
+                          <div class="DA-circle mt-2 mb-2">
+                            <i class="fa-solid fa-hand-holding-dollar"></i>
+                          </div>
+                        </div>
+                        <div class="col-sm-9 align-self-center" >
+                          <div class="info-tktk">
+                            <label for="">Tổng số tiền nếu rút hết TKTK:</label>
+                          </div>
+                          <div class="money-tktk" style="height: 50%;">
+                            <label id="totalWithdrawalAmount" for=""></label>
+                            <label for="" class="ml-2">vnd</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row mb-2 DA-general-style">
+                        <div class="col-sm-3 align-self-center" style="padding-left: 14px;">
+                          <div class="DA-circle mt-2 mb-2">
+                            <i class="fa-solid fa-sack-dollar"></i>
+                          </div>
+                        </div>
+                        <div class="col-sm-9 align-self-center">
+                          <div class="info-tktk">
+                            <label for="">Tổng số tiền chưa gửi:</label>
+                          </div>
+                          <div class="money-tktk" style="height: 50%;">
+                            <label id="totalAmountNotSend" for=""></label>
+                            <label for="" class="ml-2">vnd</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row mb-2 DA-general-style">
+                        <div class="col-sm-3 align-self-center" style="padding-left: 14px;">
+                          <div class="DA-circle mt-2 mb-2">
+                            <i class="fa-solid fa-building-columns"></i>
+                          </div>
+                        </div>
+                        <div class="col-sm-9 align-self-center" >
+                          <div class="info-tktk">
+                            <label for="">Tổng số tiền đang gửi:</label>
+                          </div>
+                          <div class="money-tktk" style="height: 50%;">
+                            <label id="totalAmountSend" for=""></label>
+                            <label for="" class="ml-2">vnd</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row DA-general-style">
+                        <div class="col-sm-3 align-self-center" style="padding-left: 14px;">
+                          <div class="DA-circle mt-2 mb-2">
+                            <i class="fa-solid fa-seedling"></i>
+                          </div>
+                        </div>
+                        <div class="col-sm-9 align-self-center">
+                          <div class="info-tktk">
+                            <label for="">Tổng số tiền lãi:</label>
+                          </div>
+                          <div class="money-tktk" style="height: 50%;">
+                            <label id="totalAmountInterest" for=""></label>
+                            <label for="" class="ml-2">vnd</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-7" style="padding-left: 0px; padding-right: 6px;">
+              <div class="card mb-2" style="padding: 0px 18px; background-color: #2b3139;">
+                <div class="card-body p-2">
+                  <i class="fa-solid fa-chart-pie" style="display: inline-block; color: greenyellow; font-size: 20px;"></i>
+                  <label for="" style=" color: #079bd1; font-size: 12px; font-weight: 700;"> Phần trăm gửi tiết kiệm vào ngân hàng</label>
+                  <div class="row p-2" style="padding-bottom: 12px !important;">
+                    <div class="col-sm-12">
+                      <canvas id="myChartDounghnut" class="DA-chart" style="max-height: 244px;"></canvas>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12" style="padding-left: 0px; padding-right: 6px;">
+              <div class="card mb-2" style="padding: 0px 18px; background-color: #2b3139;">
+                <div class="card-body p-2">
+                  <i class="fa-solid fa-chart-bar" style="display: inline-block; color: greenyellow; font-size: 20px;"></i>
+                  <label for="" style=" color: #079bd1; font-size: 12px; font-weight: 700;"> Biểu đồ thể hiện các khoản GTK theo ngân hàng</label>
+                  <div class="row p-2">
+                    <div class="col-sm-12">
+                      <canvas id="myChartBarY" class="DA-chart" style="max-height: 300px;"></canvas>
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="row">
+            <div class="col-md-12" style="padding-left: 6px; padding-right: 0px;">
+              <div class="card mb-2 DA-scoll-bar-bank" style="padding: 0px 18px; background-color: #2b3139;">
+                <div class="card-body p-2 ">
+                  <i class="fa-solid fa-building-columns" style="display: inline-block; color: greenyellow; font-size: 20px;"></i>
+                  <label for="" style=" color: #079bd1; font-size: 12px; font-weight: 700;"> Bảng thống kê số tiền đang gửi trong ngân hàng</label>
+                  <div class="row p-2">
+                    <!-- list các ngân hàng -->
+                    <ul class="col-sm-12 pt-2" id="DA-listBank">
+                      
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12" style="padding-left: 6px; padding-right: 0px;">
+              <div class="card mb-2" style="padding: 0px 18px; background-color: #2b3139;">
+                <div class="card-body p-2 ">
+                  <i class="fa-solid fa-money-bill-trend-up" style="display: inline-block; color: greenyellow; font-size: 20px;"></i>
+                  <label for="" style=" color: #079bd1; font-size: 12px; font-weight: 700;"> Biểu đồ thể hiện các khoản lãi có thể nhận được</label>
+                  <div class="row p-2">
+                    <!-- Biểu đồ lãi có thể nhận được -->
+                    <canvas id="myChartBarX" class="DA-chart"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+<script src="../plugins/bootstrap-5.3.2-dist/js/popper.min.js"></script>
+<script src="../plugins/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js"></script>
+<script src="../plugins/jquery/jquery-3.7.1.min.js"></script>
+<script src="../plugins/datatables/DataTables-1.13.7/js/jquery.dataTables.min.js"></script>
+<script src="../plugins/datatables/datatables.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="../js/statistic_saving.js"></script>
+<script>
+    
+
+    var thu1 = 0, chi1 = 0;
+    
+</script>
+</body>
+</html>

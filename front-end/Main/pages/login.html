@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TiềnTỷTầmTay - Đăng nhập</title>
+    <link rel="stylesheet" href="../plugins/fontawesome-free-6.4.2-web/css/all.min.css">
+    <link rel="stylesheet" href="../plugins/bootstrap-5.3.2-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/login.css">
+</head>
+<body onload="checkLogin()">
+    <div class="DA-container" id="main">
+        <div class="DA-sign-up">
+            <form action="#" id="signUp_form">
+                <h1 style="margin: 10px;">Tạo tài khoản</h1>
+                <!-- <p>Hoặc sử dụng tài khoản của bạn</p> -->
+                <label id="signUp-error-dob">*Thông tin ngày sinh không phù hợp</label>
+                <input type="text" id="HoVaTen" placeholder="Họ và tên" required>
+                <div class="row">
+                    <div class="col-md-6" style="padding-right: 8px;">
+                        <input type="date" id="NgaySinh" placeholder="Ngày sinh" required>
+                    </div>
+                    <div class="col-md-6" style="padding-left: 8px;">
+                        <input type="text" id="Sdt" placeholder="Số điện thoại" required>
+                    </div>
+                </div>
+                <input type="email" id="email" placeholder="Email" required>
+                <label id="signUp-error-name">*Tên người dùng đã tồn tại</label>
+                <input type="text" id="signUp_username" placeholder="Tên tài khoản" required>
+                <input type="password" id="signUp_password" placeholder="Mật khẩu" required>
+                <label id="signUp-error-password">*Nhập lại mật khẩu không đúng</label>
+                <input type="password" id="signUp_rpassword" placeholder="Nhập lại mật khẩu" required>
+                
+                <button>Đăng ký</button>
+            </form>
+        </div>
+        <div class="DA-sign-in">
+            <form action="#" id="signIn_form">
+                <h1>Đăng nhập</h1>
+                <p>Sử dụng tài khoản của bạn</p>
+                <label id="error-mess">*Thông tin tài khoản, mật khẩu không chính xác</label>
+                <div class="row" style="width: 100%;">
+                    <div class="col-md-12" >
+                        <input type="text" id="signIn_username" placeholder="Tên tài khoản" required>
+                    </div>
+                </div>
+                <div class="row" style="width: 100%;">
+                    <div class="col-md-12" style="position: relative;">
+                        <input type="password" id="signIn_password" placeholder="Mật khẩu" required> 
+                        <i class="DA-icon-eyes fa-solid fa-eye-slash" style="position: absolute;"></i>
+                    </div>
+                </div>
+                <a href="#">Quên mật khẩu?</a>
+                <button id="btn-signIn" type="submit">Đăng nhập</button>
+            </form>
+        </div>
+        <div class="DA-overlay-container">
+            <div class="DA-overlay">
+                <div class="DA-overlay-left">
+                    <h1>Chào mừng em đến với nhà của bọn anh!</h1>
+                    <p>Bọn anh sống đâu chẳng được</p>
+                    <button id="signIn">Sign in</button>
+                </div>
+                <div class="DA-overlay-right">
+                    <h1>Chào mừng bạn trở lại!</h1>
+                    <p>To keep connected with us please login with your personal info</p>
+                    <button id="signUp">Sign Up</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="container-toast">
+        <div class="DA-toast">
+          <div class="toast__icon">
+              <i class="fa-solid fa-circle-check"></i>
+          </div>
+          <div class="toast__body">
+              <h3 class="toast__title">Thành công</h3>
+              <p class="toast__msg">Bạn đã đăng ký thành công!</p>
+          </div>
+          <div class="toast__close">
+              <i class="fa-solid fa-xmark"></i>
+          </div>
+        </div>
+      </div>
+<script src="../plugins/bootstrap-5.3.2-dist/js/bootstrap.min.js"></script>
+<script src="../plugins/jquery/jquery-3.7.1.min.js"></script>
+<script src="../js/login.js"></script>
+</body>
+</html>

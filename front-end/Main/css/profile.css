@@ -1,0 +1,35 @@
+.DA-avt{
+    padding-top: 50px;
+}
+.DA-avt img{
+    height: 150px;
+    border: 5px solid #87d1ff;
+    border-radius: 125px;
+}
+.DA-change-img{
+    font-size: 13px;
+    color: rgb(255, 119, 119);
+    font-weight: 700;
+}
+.DA-name{
+    margin-top: 8px;
+}
+.DA-label{
+    font-weight: 700;
+    color: #77dbff;
+    margin-top: 12px;
+}
+.DA-info{
+    color: azure;
+    padding-left: 4px;
+}
+.DA-user-budget .DA-info{
+    font-size: 24px;
+    color: #0ecb74;
+}
+.DA-show{
+    display: block !important;
+}
+.DA-showRemoveBtn{
+    display: inline-block !important;
+}

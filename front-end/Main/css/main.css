@@ -1,0 +1,44 @@
+.DA-text-color{
+    color: #fff !important;
+}
+.DA-background-color{
+    background-color: #000 !important;
+}
+.DA-elenments-color{
+    background-color: rgb(66, 66, 66);
+}
+.DA-general-style{
+    background-color: rgb(187, 255, 183); 
+    border-radius: 8px;
+}
+.DA-circle{
+    height: 50px;
+    width: 50px;
+    background-color: burlywood;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 20px;
+    text-align: center;
+    line-height: 39px;
+    border: solid 4px #ffffff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+}
+.info-tktk{
+    color: #000;
+    font-size: 14px;
+    margin-top: 10px;
+}
+.money-tktk{
+    color: #1c27ff;
+    font-size: 20px;
+    margin-top: -9px;
+}
+.table td, .table th {
+    padding: 0.15rem;
+    vertical-align: top;
+    border-top: 1px solid #44515d;
+}
+.DA-wait{
+    background-image: url('../../image/backrground/background4.jpg');
+    
+}

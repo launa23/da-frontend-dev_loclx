@@ -1,0 +1,49 @@
+.DA-label{
+    color: rgb(0, 221, 255);
+    font-size: 12px;
+    font-weight: 600;
+    /* padding-left: 16px; */
+}
+.DA-infoDetail{
+    font-size: 13px;
+}
+.DA-dateTransaction{
+    color: antiquewhite;
+    margin-bottom: -13px;
+    font-style: italic;
+    font-size: 13px;
+    padding-left: 12px;
+    padding-top: 10px;
+}
+.DA-infoTransaction{
+    height: 341px;
+    border-radius: 8px; 
+    overflow-x:hidden;
+    overflow-y:auto;
+    background-color: #000000; 
+    padding-top: 10px;
+}
+#DA-filterIncomeStart,
+#DA-filterOutcomeStart{
+    font-size: 13px;
+    border-radius: 8px; 
+    padding: 4px; 
+    background-color: #3c4652; 
+    border: 1px solid #776d6d; 
+    color: #fff; 
+    display: inline-block   ;
+}
+#DA-filterIncomeEnd,
+#DA-filterOutcomeEnd{
+    font-size: 13px;
+    border-radius: 8px; 
+    padding: 4px; 
+    background-color: #3c4652; 
+    border: 1px solid #776d6d; 
+    color: #fff; 
+    display: inline-block;
+}
+#DA-btnClose:hover{
+    cursor: pointer;
+    color: red; 
+}

@@ -1,0 +1,192 @@
+.DA-sticky{
+    position: fixed;
+    bottom: 50px;
+    right: 50px;
+    width: 50px;
+    height: 50px;
+}
+.DA-outcome-today{
+    display: block;
+    font-size: 24px !important; 
+    float: inline-end;
+    width: 50px;
+    height: 50px;
+    background-color: #69a5ff;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 50px;
+    color: #fff;
+    box-shadow: 0 0 26px rgba(255, 255, 255, 0.397);
+}
+.DA-outcome-today:hover{
+    background-color: #86b7fe;
+    color: #fff;
+    font-size: 30px !important;
+}
+.DA-btn-close{
+    border: none;
+    color: #fff;
+    font-size: 24px;
+}
+.DA-btn-close:hover{
+    color: red;
+    border-radius: 50%;
+    
+}
+.DA-general-style{
+    background-color: #fee7d7; 
+    border-radius: 8px;
+    height: 56px;
+}
+.DA-circle{
+    height: 40px;
+    width: 40px;
+    background-color: burlywood;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 20px;
+    text-align: center;
+    line-height: 30px;
+    border: solid 4px #ffffff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+}
+.padding-12px{
+    padding: 0px 8px;
+}
+.info-tktk{
+    color: #000;
+    font-size: 10px;
+    font-weight: 700;
+    padding-bottom: 10px;
+}
+.money-tktk{
+    color: #1c73ff;
+    font-size: 17px;
+    font-weight: 700;
+    margin-top: -9px;
+}
+.DA-bank-style{
+    background-color: #252526;
+    border-radius: 8px;
+    height: 34px;
+    font-size: 12px;
+    color: #fee7d7;
+}
+.bankName{
+    color: #03a5e0;
+}
+.bankAmount{
+    color: #0ecb74;
+    float: inline-end;
+}
+.banklabel{
+    color: #ffff00;
+}
+.DA-scoll-bar-bank{
+    height: 305px;
+    overflow-x:hidden;
+    overflow-y:auto;
+}
+::-webkit-scrollbar {
+    width: 4px;
+}
+::-webkit-scrollbar-thumb {
+    background-color: rgb(59, 59, 59);
+    border-radius: 3px;
+}
+.dropdown-toggle::after {
+    display: none !important;
+}
+.table{
+    background-color: #252526 !important;
+}
+.table td, .table th {
+    padding: 4px;
+    padding-left: 18px;
+    width: 50px;
+    vertical-align: top;
+    /* border-top: 1px solid #44515d; */
+    font-size: 12px;
+}
+.DA-bg-table{
+    background-color: #252526 !important;
+}
+.table tbody tr th {
+    padding-left: 34px;
+}
+.DA-table-income{
+    color: #0ecb74 !important;
+}
+.DA-table-outcome{
+    color: #f87c8b !important;
+}
+.DA-table-sum{
+    color: #00b0f0 !important;
+    text-align: center;
+}
+table tfoot tr th{
+    color: #ffc000 !important;
+    padding-left: 4px !important;
+}
+.DA-scoll-bar-today{
+    height: 424px;
+    overflow-x:hidden;
+    overflow-y:auto;
+    background-color: #2b3139;
+}
+::-webkit-scrollbar {
+    width: 4px;
+}
+::-webkit-scrollbar-thumb {
+    background-color: rgb(99, 99, 99);
+    border-radius: 3px;
+}
+.DA-border-radius{
+    border-radius: 10px;
+}
+.img-icon{
+    display: inline-block;
+}
+.img-icon img{
+    width: 24px;
+    border-radius: 12px;
+
+}
+.DA-today img{
+    width: 32px !important;
+}
+.active{
+    background-color: #2b3139 !important;
+    border-bottom: none !important;
+    color: #ffc000 !important;
+}
+.DA-dropdown-menu{
+    max-height: 252px;
+    overflow-x:hidden;
+    overflow-y:auto;
+    padding-left: 12px;
+}
+#DA-dateFrom, #DA-dateTo{
+    width: 80%; 
+    font-size: 12px; 
+    display: inline-block !important;
+}
+.DA-dropdown-menu option {
+    display: inline-block;
+    padding: 6px 4px;
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+
+}
+/* #DA-listCategories li:hover{
+    border-radius: 10px;
+    background-color: #000;
+    padding-left: 10px;
+    padding-bottom: 4px;
+} */
+.DA-selected{
+    border-radius: 10px;
+    background-color: #000;
+    padding-left: 10px;
+    padding-bottom: 4px;
+}

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TiềnTỷTầmTay - Mục tiêu tài chính</title>
+    <link rel="stylesheet" href="../plugins/bootstrap-5.3.2-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../plugins/fontawesome-free-6.4.2-web/css/all.min.css">
+    <link rel="stylesheet" href="../plugins/datatables/datatables.min.css">
+    <link rel="stylesheet" href="../plugins/datatables/DataTables-1.13.7/css/jquery.dataTables.min.css">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.9.2/semantic.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.semanticui.min.css"> -->
+    <link rel="stylesheet" href="../css/income.css">
+    <link rel="stylesheet" href="../css/finance_goal.css">
+
+</head>
+
+<body style="background-color: #0b0e11;" onload="checkLogin()">
+    <nav class="navbar navbar-expand-lg bg-info" style="box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);">
+        <div class="container p-0 bg-info" style="width: 1140px;">
+            <a class="navbar-brand te" href="#">Quản lý tài chính</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="income.html">Thu nhập</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="outcome.html">Chi tiêu</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" aria-current="page" href="saving.html">Tiết kiệm</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white DA-active" aria-current="page" href="finance_goal.html">Mục tiêu</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link text-white dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            Thống kê
+                        </a>
+                        <ul class="dropdown-menu pt-0 pb-0" style="box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);">
+                            <li>
+                                <div class="item p-1">
+                                    <a class="dropdown-item text-dark" href="statistic_income.html">Thống kê thu nhập</a>
+                                </div>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider mt-0 mb-0">
+                            </li>
+                            <li>
+                                <div class="item p-1">
+                                    <a class="dropdown-item text-dark" href="statistic_outcome.html">Thống kê chi tiêu</a>
+                                </div>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider mt-0 mb-0">
+                            </li>
+                            <li>
+                                <div class="item p-1">
+                                    <a class="dropdown-item text-dark" href="statistic_saving.html">Thống kê tiết kiệm</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="collapse navbar-collapse ml-auto" style="justify-content: end;">
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown" id="DA-loginCheck">
+                        <a class="nav-link text-white dropdown-toggle" href="#" id="DA-HoVaTen" data-bs-toggle="dropdown" aria-expanded="false"></a>
+                        <ul class="dropdown-menu">
+                          <li><a class="dropdown-item text-dark" id="DA-profile" href="./profile.html">Thông tin tài khoản</a></li>
+                          <li><a class="dropdown-item text-dark" id="DA-logout">Đăng xuất</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+
+    <!-- Phần chính -->
+    <div class="container" style="width: 1140px;">
+        <div class="row mt-3">
+            <div class="card ">
+                <div class="row card-body" style="background-color: #222629; border-radius: 8px;padding: 0;">
+                    <label style="color: #8d959f; padding: 12px 30px; font-style: italic;">Dự thu</label>
+                    <div class="card DA-scoll-list-goal mb-3" style="background-color: #222629; width: 426px;">
+                        <div class="card-body" style="background-color: #2a3740; border-radius: 8px; padding-bottom: 0;">
+                            <i class="fa-regular fa-clipboard" style="display: inline-block; color: greenyellow; font-size: 20px;"></i>
+                            <label for="" style=" color: #079bd1; font-size: 12px; font-weight: 700;">Danh sách dự thu</label>
+                            <ul class="text-white mt-3" style="padding: 0px;" id="DA-listIncomeGoal">
+                                
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card" style="background-color: #222629; flex: 1;">
+                        <div class="card-body">
+                            <div class="" style="float: inline-end;">
+                                <div class="" style="display: inline-block;">
+                                    <label for="" style="color: #6ad7ff; font-size: 12px; display: block; padding: 0px 12px;">Ngày bắt đầu</label>
+                                    <input type="date" class="form-control DA-inputDate" id="DA-filterStartDate">
+                                </div>
+                                <div class="" style="display: inline-block;">
+                                    <label for="" style="color: #6ad7ff; font-size: 12px; display: block; padding: 0px 12px;">Ngày kết thúc</label>
+                                    <input type="date" class="form-control DA-inputDate" id="DA-filterEndDate">
+                                </div>
+                                <div class="" style="display: inline-block;">
+                                    <button class="btn btn-info" style="padding: 2px 12px; color: aliceblue;" id="DA-filterIncomeGoal">Lọc</button>
+                                </div>
+                            </div>
+                            <canvas id="myChartIncomeGoal"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Mục tiêu chi tiêu -->
+        <div class="row mt-3">
+            <div class="card ">
+                <div class="row card-body" style="background-color: #222629; border-radius: 8px;padding: 0;">
+                    <label style="color: #8d959f; padding: 12px 30px; font-style: italic;">Dự chi</label>
+                    <div class="card DA-scoll-list-goal mb-3" style="background-color: #222629; width: 426px;">
+                        <div class="card-body" style="background-color: #2a3740; border-radius: 8px; padding-bottom: 0;">
+                            <i class="fa-regular fa-clipboard" style="display: inline-block; color: greenyellow; font-size: 20px;"></i>
+                            <label for="" style=" color: #079bd1; font-size: 12px; font-weight: 700;">Danh sách dự chi</label>
+                            <ul class="text-white mt-3" style="padding: 0px;" id="DA-listOutcomeGoal">
+                                
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card" style="background-color: #222629; flex: 1;">
+                        <div class="card-body">
+                            <div class="" style="float: inline-end;">
+                                <div class="" style="display: inline-block;">
+                                    <label for="" style="color: #6ad7ff; font-size: 12px; display: block; padding: 0px 12px;">Ngày bắt đầu</label>
+                                    <input type="date" class="form-control DA-inputDate" id="DA-filterStartDateOut">
+                                </div>
+                                <div class="" style="display: inline-block;">
+                                    <label for="" style="color: #6ad7ff; font-size: 12px; display: block; padding: 0px 12px;">Ngày kết thúc</label>
+                                    <input type="date" class="form-control DA-inputDate" id="DA-filterEndDateOut">
+                                </div>
+                                <div class="" style="display: inline-block;">
+                                    <button class="btn btn-info" style="padding: 2px 12px; color: aliceblue;" id="DA-filterOutcomeGoal">Lọc</button>
+                                </div>
+                            </div>
+                            <canvas id="myChartOutcomeGoal"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="" style="height: 100px;"></div>
+    <div class="DA-sticky">
+        <label class="DA-outcome-today" type="button" data-bs-toggle="modal" data-bs-target="#addFinanceGoal" id="DA-resetGoal">
+            <i class="fa-solid fa-plus"></i>
+        </label>
+    </div>
+
+    <div class="modal fade" id="addFinanceGoal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header p-3 bg-info">
+                    <h1 class="modal-title fs-5 text-white" id="staticBackdropLabel">Quản lý mục tiêu</h1>
+                    <button type="button" class="DA-btn-close bg-info btn-close-form-create" data-bs-dismiss="modal" aria-label="Close"><i
+                            class="fa-solid fa-xmark"></i></button>
+                </div>
+
+                <div class="modal-body">
+                    <nav>
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                            <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab"
+                                data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home"
+                                aria-selected="true">Mục tiêu</button>
+                        </div>
+                    </nav>
+                    <div class="tab-content mt-2" id="nav-tabContent">
+                        <div id="DA-showError">Lỗi</div>
+
+                        <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
+                            aria-labelledby="nav-home-tab" tabindex="0">
+                            <form id="DA-FinanceGoal">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="mb-2">
+                                            <label class="form-label" style="color: #079bd1;">Số tiền</label>
+                                            <input type="number" class="form-control" id="AddGoalAmount">
+                                            <span class="formMessage"></span>
+                                            <input type="number" class="form-control" id="DA-idGoal" style="display: none;">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="mb-2 selectIncomeCategory">
+                                            <label class="form-label" style="color: #079bd1;">Loại</label>
+                                            <select class="form-select" id="AddGoalType" aria-label="Default select example">
+                                                <option value="income">Dự thu</option>
+                                                <option value="outcome">Dự chi</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="mb-2">
+                                            <label class="form-label" style="color: #079bd1;">Ngày bắt đầu</label>
+                                            <input type="date" class="form-control" id="AddGoalStart">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="mb-2">
+                                            <label class="form-label" style="color: #079bd1;">Ngày kết thúc</label>
+                                            <input type="date" class="form-control" id="AddGoalEnd">
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-info text-white mt-3" style="display: none;" id="DA-btnAdd">Lưu</button>
+                                <button type="button" class="btn btn-success text-white mt-3" style="display: none;" id="DA-btnUpdate">Cập nhật</button>
+                                <button type="button" class="btn btn-danger text-white mt-3" style="display: none;" id="DA-btnDelete">Xóa</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../plugins/bootstrap-5.3.2-dist/js/popper.min.js"></script>
+    <script src="../plugins/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../plugins/jquery/jquery-3.7.1.min.js"></script>
+    <script src="../plugins/datatables/DataTables-1.13.7/js/jquery.dataTables.min.js"></script>
+    <script src="../plugins/datatables/datatables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../js/finance_goal.js"></script>
+
+</body>
+
+</html>

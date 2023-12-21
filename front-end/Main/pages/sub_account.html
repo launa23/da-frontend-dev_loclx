@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../plugins/bootstrap-5.3.2-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../plugins/fontawesome-free-6.4.2-web/css/all.min.css">
+    <link rel="stylesheet" href="../plugins/datatables/datatables.min.css">
+    <link rel="stylesheet" href="../plugins/datatables/DataTables-1.13.7/css/jquery.dataTables.min.css">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.9.2/semantic.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.semanticui.min.css"> -->
+    <link rel="stylesheet" href="../css/income.css">
+    <link rel="stylesheet" href="../css/sub_account.css">
+
+</head>
+
+<body style="background-color: #0b0e11;" onload="checkLogin()">
+    <nav class="navbar navbar-expand-lg bg-info" style="box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);">
+        <div class="container p-0 bg-info" style="width: 1140px;">
+            <a class="navbar-brand te" href="#">Quản lý tài chính</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="income.html">Thu nhập</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="outcome.html">Chi tiêu</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" aria-current="page" href="saving.html">Tiết kiệm</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" aria-current="page" href="finance_goal.html">Mục tiêu</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link text-white dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            Thống kê
+                        </a>
+                        <ul class="dropdown-menu pt-0 pb-0" style="box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);">
+                            <li>
+                                <div class="item p-1">
+                                    <a class="dropdown-item text-dark" href="statistic_income.html">Thống kê thu nhập</a>
+                                </div>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider mt-0 mb-0">
+                            </li>
+                            <li>
+                                <div class="item p-1">
+                                    <a class="dropdown-item text-dark" href="statistic_outcome.html">Thống kê chi tiêu</a>
+                                </div>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider mt-0 mb-0">
+                            </li>
+                            <li>
+                                <div class="item p-1">
+                                    <a class="dropdown-item text-dark" href="statistic_saving.html">Thống kê tiết kiệm</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="collapse navbar-collapse ml-auto" style="justify-content: end;">
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown" id="DA-loginCheck">
+                        <a class="nav-link text-white dropdown-toggle" href="#" id="DA-HoVaTen" data-bs-toggle="dropdown" aria-expanded="false"></a>
+                        <ul class="dropdown-menu">
+                          <li><a class="dropdown-item text-dark" id="DA-profile" href="./profile.html">Thông tin tài khoản</a></li>
+                          <li><a class="dropdown-item text-dark" id="DA-logout">Đăng xuất</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="container" style="width: 1140px;">
+        <div class="row mt-3">
+            <!-- Thông tin cá nhân -->
+           <div class="col-lg-3" style="padding-left: 0;">
+            <div class="card" style="height: 650px;">
+                <div class="card-body " style="border-radius: 8px; background-color: #2b3139; ">
+                    <div class="DA-infoUser text-white bg-black" style=" border-radius: 8px; padding: 12px; font-size: 14px;">
+                        <h5 class="text-white" style="text-align: center; font-size: 16px;">
+                            <i class="fa-solid fa-user"></i>
+                            Thông tin Sub Acount
+                        </h5>
+                        <div class="mb-1">
+                            <label class="DA-label">Họ và tên:</label>
+                            <label class="DA-infoDetail" id="SubHoVaTen">--</label>
+                        </div>
+                        <div class="mb-1">
+                            <label class="DA-label">CCCD:</label>
+                            <label for="DA-infoDetail" id="SubCCCD">--</label>
+                        </div>
+                        <div class="mb-1">
+                            <label class="DA-label">Ngày sinh:</label>
+                            <label class="DA-infoDetail" id="SubNgaySinh">--</label>
+                        </div>
+                        <div class="mb-1">
+                            <label class="DA-label">Email:</label>
+                            <label class="DA-infoDetail" id="SubEmail">--</label>
+                        </div>
+                        <div class="mb-1">
+                            <label class="DA-label">SĐT:</label>
+                            <label class="DA-infoDetail" id="SubSDT">--</label>
+                        </div>
+                        <div class="mb-1">
+                            <label class="DA-label">Số dư:</label>
+                            <label class="text-success" id="SubMoney" style="font-size: 20px; font-weight: 600;">--</label>
+                            <label class="text-warning"  style="font-size: 12px;">VNĐ</label>
+                        </div>
+                        <div class="bg-primary mt-3" style="border-radius: 8px; padding: 10px 10px 5px 10px;">
+                            <div class="" style="font-size: 14px; font-weight: 600;">
+                                <i class="fa-solid fa-hand-holding-dollar" style="color: greenyellow; font-size: 16px;"></i>
+                                <label for="" style="color: #ffffff; font-size: 12px; font-weight: 700">Tổng thu nhập</label>
+                            </div>
+                            <div class="" style="text-align: center;">
+                                <label id="totalIncomeSub" style="font-size: 24px; font-weight: 600;">0</label>
+                                <label class="text-warning" style="font-size: 14px;">VNĐ</label>
+                            </div>
+                        </div>
+                        <div class="bg-danger mt-3"  style="border-radius: 8px; padding: 10px 10px 5px 10px;">
+                            <div class="" style="font-size: 14px; font-weight: 600;">
+                                <i class="fa-solid fa-hand-holding-dollar"  style="color: greenyellow; font-size: 16px;"></i>
+                                <label for="" style="color: #ffffff; font-size: 12px; font-weight: 700">Tổng chi tiêu</label>
+                            </div>
+                            <div class="" style="text-align: center;">
+                                <label id="totalOutcomeSub" style="font-size: 24px; font-weight: 600;">0</label>
+                                <label class="text-warning" style="font-size: 14px;">VNĐ</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           </div>
+           <!-- Thông tin thu chi -->
+           <div class="col-lg-9" style="padding: 0;">
+            <div class="card">
+                <div class="card-body" style="border-radius: 8px; background-color: #2b3139; ">
+                    <div class="row">
+                        <div class="col-md-6" style="padding-right: 6px;">
+                            <div class="card">
+                                <div class="card-body  DA-infoTransaction">
+                                    <div class="" style="margin-bottom: 12px;  color: #079bd1; font-size: 12px; font-weight: 700;">
+                                        <i class="fa-solid fa-coins"
+                                            style="display: inline-block; color: greenyellow; font-size: 20px;"></i>
+                                        <label id="test" style=" color: #079bd1; font-size: 12px; font-weight: 700;"> Các khoản thu</label>
+                                    </div>
+                                    <div class="mb-2" style=" padding-left: 35px;">
+                                        <input type="date" id="DA-filterIncomeStart">
+                                        <input type="date" id="DA-filterIncomeEnd">
+                                        <button style="border-radius: 8px; border: none;" id="DA-btnFilterIncome">Lọc</button>
+                                    </div>
+                                    <!-- Danh sách các khoản thu của sub acc -->
+                                    <div id="DA-listIncomeSub">
+                                        <center style="color: #4b4f55;">
+                                            Đang tải...
+                                        </center>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6" style="padding-left: 6px;">
+                            <div class="card">
+                                <div class="card-body DA-infoTransaction">
+                                    <div class="" style="margin-bottom: 12px;  color: #079bd1; font-size: 12px; font-weight: 700;">
+                                        <i class="fa-solid fa-coins"
+                                            style="display: inline-block; color: greenyellow; font-size: 20px;"></i>
+                                        <label id="test" style=" color: #079bd1; font-size: 12px; font-weight: 700;"> Các khoản chi</label>
+                                    </div>
+                                    <div class="mb-2" style=" padding-left: 35px;">
+                                        <input type="date" id="DA-filterOutcomeStart">
+                                        <input type="date" id="DA-filterOutcomeEnd">
+                                        <button style="border-radius: 8px; border: none;" id="DA-btnFilterOutcome">Lọc</button>
+                                    </div>
+                                    <!-- Danh sách các khoản thu của sub acc -->
+                                    <div id="DA-listOutcomeSub">
+                                        <center style="color: #4b4f55;">
+                                            Đang tải...
+                                        </center>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12 p-0">
+                            <div class="card">
+                                <div class="card-body" style="border-radius: 8px; background-color: #2b3139; padding: 20px 40px;">
+                                    <button style="height: 30px; border-radius: 8px; background-color: #079bd1; color: #ffffff; border: none;" id="DA-btnSwitch">Hiển thị</button>
+                                    <canvas id="myChart" class="DA-chartSub"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           </div>
+        </div>
+    </div>
+
+    <!-- <div class="DA-overlay" id="DA-overlayNullorMoney"></div>
+    <div class="DA-modal bg-warning" id="modalMoneyStart">
+        <h5 style="display: inline-block;">Thông báo!</h5>
+        <i class="fa-solid fa-xmark" style="float: inline-end; font-size: 18px;" id="DA-btnClose"></i>
+        <p style="font-style: italic; margin: 0; border-top: 1px solid; padding-left: 12px;">Tài khoản này đang chi vượt quá thu! Cân nhắc trước khi cho mượn tiền</p>
+        <input type="checkbox" value=1 id="DA-checkBox"> <label for="" style="font-size: 14px;">Không hiển thị lại!</label>
+    </div> -->
+    
+
+
+
+    <script src="../plugins/bootstrap-5.3.2-dist/js/popper.min.js"></script>
+    <script src="../plugins/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../plugins/jquery/jquery-3.7.1.min.js"></script>
+    <script src="../plugins/datatables/DataTables-1.13.7/js/jquery.dataTables.min.js"></script>
+    <script src="../plugins/datatables/datatables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../js/sub_account.js"></script>
+
+</body>
+
+</html>

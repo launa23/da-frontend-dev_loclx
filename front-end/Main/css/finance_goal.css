@@ -1,0 +1,48 @@
+.nav-pills .nav-link.active{
+    background-color: rgb(13,202,240) !important;
+}
+.DA-itemgoal{
+    border-radius: 8px; 
+    background-color: #0b0e11; 
+    padding: 12px;
+}
+.DA-scoll-list-goal{
+    height: 408px;
+    overflow-x:hidden;
+    overflow-y:auto;
+    border-radius: 8px;
+}
+#DA-showError{
+    color: red; 
+    font-size: 12px; 
+    font-style: italic; 
+    text-align: center;
+    display: none;
+}
+.showErrorGoal{
+    display: block !important;
+}
+.showGoal{
+    display: inline-block !important;
+}
+.DA-listIncomeTran{
+    margin-left: 12px; 
+    margin-right: 12px; 
+    color: #000; 
+    background-color: #2c2d37;
+}
+.DA-listOutcomeTran{
+    margin-left: 12px; 
+    margin-right: 12px; 
+    color: #000; 
+    background-color: #2c2d37;
+}
+.DA-inputDate{
+    width: 126px; 
+    display: inline-block; 
+    padding: 6px; 
+    font-size: 14px; 
+    background-color: #2a3740; 
+    border: 1px solid #000; 
+    color: white;
+}
